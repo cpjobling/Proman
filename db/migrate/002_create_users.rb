@@ -11,7 +11,8 @@ class CreateUsers < ActiveRecord::Migration
       t.column :created_at,                :datetime
       t.column :updated_at,                :datetime
       t.column :remember_token,            :string
-      t.column :remember_token_expires_at, :datetime      
+      t.column :remember_token_expires_at, :datetime  
+      t.column :staff_or_student_number,   :string, :limit => 10    
     end
   end
 
