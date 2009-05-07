@@ -1,0 +1,40 @@
+<h1>Projects Ordered by Disciplines</h1>
+<%
+ curr_disc = '';
+%>
+<p>
+<% if @disciplines_proj.blank? %>
+    <p>no projects to display</p>
+<%else%>
+  <ul id="projects">
+    <% @disciplines_proj.each do |is| %>
+ <%
+          if curr_disc == ''
+            curr_disc = Discipline.find(is.discipline_id).name
+        %>
+      <p><u><%= 'Projects suitable for ' + Discipline.find(is.discipline_id).name %><br></u></p>
+      <%
+          else
+            if curr_disc != Discipline.find(is.discipline_id).name
+        %>
+    <p><u><%= 'Projects suitable for ' + Discipline.find(is.discipline_id).name %><br></u></p>
+    <%
+              curr_disc = Discipline.find(is.discipline_id).name
+            end
+          end
+        %>
+      <li>
+  <%= link_to  Project.find(is.project_id).title, {:action => 'show', :id => is.id} -%>
+      <%end%>
+  </ul>
+<%end%>
+
+<p>To veiw projects sorted by creator <%= link_to "Click Here", {:action => 'order_by_creator'} %></p>
+<p><%= link_to 'Back', {:action => 'index'} %></p>
+
+
+
+
+
+
+

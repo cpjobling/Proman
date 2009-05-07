@@ -1,0 +1,18 @@
+
+
+<%form_for :student, @student, :url => {:action=>'update' , :id=>@student.id} do |f|%>
+
+<h1><%= @student.user.last_name + " " + @student.user.first_name + "'s detalis:" %></h1>
+
+  <p><label for="user_id">User ID</label>
+  <%= f.text_field 'user_id' %></p>
+
+  <p><label for="grade">Grade:</label>
+  <%= f.text_field  'grade', :maxlength => '3' %></p>
+  
+  <p><label for="projectr_id">Allocated Project ID</label>
+  <%= f.text_field 'project_id' %></p>
+
+  <%= f.submit "Update" %>
+<%end%>
+  <p><%= link_to 'Back', {:action => 'index'} %></p>

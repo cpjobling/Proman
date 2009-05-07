@@ -1,0 +1,15 @@
+
+<p>
+<b>Login:</b> <%=h @user.login %>
+</p>
+<p><b>Email:</b> <%=h @user.email %>
+</p>
+<p><b>First Name:</b> <%=h @user.first_name %>
+</p>
+<p><b>Last Name:</b> <%=h @user.last_name %>
+</p>
+<p>
+<b>Role(s):</b> <%=h @user.roles.collect {|r| r.name}.join(', ') %>
+</p>
+<%= link_to 'Edit', :action => 'edit', :id => @user %> |
+<%= link_to 'Back', :action => 'list' %>

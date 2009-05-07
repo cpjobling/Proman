@@ -1,0 +1,26 @@
+<%= "Tour : " + @student.tour.to_s %><br>
+<% if @wishes.length == 0 %>
+<h1>Availabale projects (choose 10):</h1>
+Current student : <%= @student.user.last_name + ", " + @student.user.first_name %><br>
+<%= flash[:notice] %>
+<% if @projects.blank? %>
+    <p>No projects for application available</p>
+<%  else %>
+<%form_tag "/students/apply_projects" do%>
+    <% @projects.each do |c| %>
+        <%= c.title %> <input type="text" name="applied[<%= c.id %>]" maxlength="2" size="2"> <br>
+      <%end%>
+  <%=  submit_tag "Apply" %>
+<% end %>
+<% end %>
+<%  else %>
+  <% if @student.project_id != 0 && !@student.project_id.nil? %>
+    Congratulations! You are already qualified for a project.<br>
+    Your project : <%= (Project.find @student.project_id).title %>
+  <% else %>
+    You made your choise: <br>
+    <% @wishes.each do |w| %>
+        <%= 'Wish' + w.wish.to_s + ' - ' + (Project.find w.project_id).title %><br>
+    <%end%>
+  <% end %>
+<% end %>

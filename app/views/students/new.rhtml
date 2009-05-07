@@ -1,0 +1,11 @@
+<h1>Add new student</h1>
+<%form_for :student, :url => {:action=>'create'} do |f|%>
+
+  <p><label for="user_id">User ID</label>
+<%= select 'student', 'user_id', @users.map {|u|[u.fullname, u.id]}%></p>
+  <p><label for="grade">Grade:</label>
+  <%= f.text_field  'grade', :maxlength => '3' %></p>
+
+  <%= f.submit "Add" %>
+<%end%>
+  <p><%= link_to 'Back', {:action => 'index'} %></p>

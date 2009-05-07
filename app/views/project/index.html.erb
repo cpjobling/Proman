@@ -1,0 +1,13 @@
+<h1>list !!!!!</h1>
+<% if @projects.blank? %>
+    <p>no projects to display</p>
+<%else%>
+  <ul id="projects">
+    <% @projects.each do |c| %>
+      <li>
+        <%= link_to c.title, {:action => 'show', :id => c.id} -%>   created by: <%= User.find(c.createdby).last_name -%>
+      <%end%>
+  </ul>
+<%end%>
+<p>To veiw projects sorted by creator <%= link_to "Click Here", {:action => 'order_by_creator'} %></p>
+<p>To veiw projects sorted by the disciplines they are suitable for <%= link_to "Click Here", {:action => 'order_by_disciplines'} %></p>

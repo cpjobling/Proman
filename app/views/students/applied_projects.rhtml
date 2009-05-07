@@ -1,0 +1,20 @@
+<h1>Applied projects list for student - <u><%= @student.user.first_name + ' ' + @student.user.last_name %></u> (<%= @student.grade %>)</h1>
+<% if @projects.blank? %>
+    <p>no applied projects to display</p>
+<%  else %>
+  <table border="1" width="50%">
+      <tr>
+        <td>Project</td>
+        <td>Wish</td>
+      </tr>
+  <% @projects.each do |c| %>
+      <tr>
+        <td>
+        <%= link_to c.title,
+          {:controller => 'project', :action => 'show', :id => c.id} -%>
+        </td>
+        <td><%= c.wish %></td>
+      </tr>
+      <%end%>
+  </table>
+<%end%>

@@ -1,0 +1,26 @@
+<h1>Students list: </h1>
+<% if @students.blank? %>
+    <p>no students to display</p>
+<%  else %>
+  <table width="60%" border="1">
+      <tr>
+        <td>Student</td>
+        <td>Applied projects</td>
+        <td>Grade</td>
+      </tr>
+    <% @students.each do |c| %>
+      <tr>
+        <td>
+        <%= link_to c.user.first_name + ' ' + c.user.last_name,
+          {:action => 'show', :id => c.id} -%>
+        </td>
+        <td>
+        <%= link_to "View applied projects",
+          {:action => 'applied_projects', :id => c.id} -%>
+        </td>
+        <td><%= c.grade %></td>
+      </tr>
+      <%end%>
+  </table>
+<%end%>
+<p><%= link_to "Add Student", {:action => 'new'} %></p>

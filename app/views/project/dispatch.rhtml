@@ -1,0 +1,23 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+<%= "Last tour : " + @last_tour.to_s %><br>
+<%= "Current tour : " + (@last_tour.to_i + 1).to_s %><br>
+<% i = 0 %>
+<% @assigned.each do |p| %>
+  <%= (Student.find(@ass_students[i])).user.first_name %> => Project ID (<%= (Project.find p).title %>)<br>
+<% i += 1 %>
+<% end %>
+<br>
+<% @nass_students.each do |nas| %>
+  <%= (Student.find(nas)).user.first_name + ' e bez proekt :( ' %><br>
+<% end %>
+<br>
+Projects left : <br>
+<% @projects.each do |pr| %>
+<% if !@assigned.include?(pr.id) %>
+  <%= pr.title + ' => ID (' + pr.id.to_s + ')'%><br>
+<% end %>
+<% end %>
+

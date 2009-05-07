@@ -1,0 +1,32 @@
+<h1>Editing User</h1>
+<%form_for(@user) do |f|%>
+
+<p><label for="login">Login</label><br/>
+<%= f.text_field 'login' %></p>
+
+<p><label for="email">Email</label><br/>
+<%= f.text_field 'email' %></p>
+
+<p><label for="first_name">First Name</label><br/>
+<%= f.text_field 'first_name' %></p>
+
+<p><label for="last_name">Last Name</label><br/>
+<%= f.text_field 'last_name' %></p>
+
+<p><label for="password">Password</label><br/>
+<%= f.password_field 'password' %></p>
+
+<p><label for="password_confirmation">Confirm Password</label><br/>
+<%= f.password_field 'password_confirmation' %></p>
+
+
+  <p>
+    <select id='role_ids' name="role_ids[]" multiple="multiple">
+        <%= options_for_select(@roles, @user.roles.collect {|d| d.id }) %>
+      </select>
+  </p>
+ 
+ <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action=>'show', id=>@user %> | <%= link_to 'Back', :action=>'list' %>
