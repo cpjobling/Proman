@@ -12,7 +12,8 @@ class MakeUserRoles < ActiveRecord::Migration
 
     staff_role = Role.find_by_sql("select id from roles where name='staff';")
     staff = User.find(3); # Real staff user (Dr C.P. Jobling)
-    staff.roles=[staff_role,admin_role]
+    staff.roles=staff_role
+    staff.roles=admin_role
     staff.save
   end
 
