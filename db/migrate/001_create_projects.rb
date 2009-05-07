@@ -1,7 +1,7 @@
 class CreateProjects < ActiveRecord::Migration
   def self.up
     create_table :projects do |t|
-      t.integer :createdby
+      t.integer :created_by
       t.text :title
       t.text :description
       t.text :resources

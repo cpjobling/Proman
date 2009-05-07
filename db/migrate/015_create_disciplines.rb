@@ -2,6 +2,7 @@ class CreateDisciplines < ActiveRecord::Migration
   def self.up
     create_table "disciplines" do |t|
       t.column :name, :string
+      t.column :long_name, :string
     end
     
     

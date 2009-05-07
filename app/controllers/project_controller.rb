@@ -36,7 +36,7 @@ class ProjectController < ApplicationController
     @project.save!
     redirect_to :action => "index"
   end
-
+  
   def allocate
     @projects = Project.find_by_sql "SELECT * FROM projects WHERE id NOT IN (SELECT project_id FROM students WHERE project_id IS NOT NULL)"
     @students = Student.find_by_sql "SELECT * FROM students WHERE project_id IS NULL OR project_id = 0 ORDER BY grade DESC"
