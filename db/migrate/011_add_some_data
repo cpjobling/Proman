@@ -1,71 +1,71 @@
-class AddData < ActiveRecord::Migration
+class AddSomeData < ActiveRecord::Migration
   def self.up
     
     #Creates projects
     Project.create(
         :createdby => '3',
         :title => 'Project 1',
-        :description => 'It is the shit bla bla bla bla blat is tha bt is the shit bla bt is the shit bla bt is the shit ble shit bla bla bla bla blat is the shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is a dummy project proposed by the staff member with id=3.',
         :resources => 'none')
       
-        Project.create(
+    Project.create(
         :createdby => '3',
         :title => 'Project 2',
-        :description => 'It is the shit bla bla bla bla blat is ta bt is the shit bla bt is the shit bla bt is the shit bla bt is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the second dummy project proposed by the staff member with id=3.',
         :resources => 'none')
       
-        Project.create(
+    Project.create(
         :createdby => '3',
         :title => 'Project 3',
-        :description => 'It is the shit bla bla bt is ta bt is the shit bla bt is the shit bla bt is the shit bla bt is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla blala bla bla',
+        :description => 'This is the third dummy project proposed by the staff member with id=3.',
         :resources => 'none')
             
         Project.create(
         :createdby => '14',
         :title => 'Project 4',
-        :description => 'It is the the shit bla bt is the shit bla bt is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the fourth dummy project proposed by the staff member with id=14.',
         :resources => 'none')
             
         Project.create(
         :createdby => '14',
         :title => 'Project 5',
-        :description => 'It is the shit bla bla bla bla blat is ta bt iss the shit bla bt is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the fifth dummy project proposed by the staff member with id=14.',
         :resources => 'none')
             
         Project.create(
         :createdby => '14',
         :title => 'Project 6',
-        :description => 'It is the shit bla bla bla blt blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the sixth dummy project proposed by the staff member with id=14.',
         :resources => 'none')
             
         Project.create(
         :createdby => '15',
         :title => 'Project 7',
-        :description => 'It is the shit bla bla bla blahe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the seventh dummy project proposed by the staff member with id=15.',
         :resources => 'none')
             
         Project.create(
         :createdby => '15',
         :title => 'Project 8',
-        :description => 'It is the shit bla bla bla bla blat is ta bt is the shthe shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the eighth dummy project proposed by the staff member with id=14.',
         :resources => 'none')
             
         Project.create(
         :createdby => '15',
         :title => 'Project 9',
-        :description => 'It is the shit bla bla bla bla blat is tat is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the fourth dummy project proposed by the staff member with id=15.',
         :resources => 'none')
             
         Project.create(
         :createdby => '15',
         :title => 'Project 10',
-        :description => 'It is the shit bla bla bla bla blat is ta bbla bt is the shit blhe shit bla bla bla bla blat is the shit bla bla bla bla bla',
+        :description => 'This is the tenth dummy project proposed by the staff member with id=15.',
         :resources => 'none')
       
     
     
     #********************************************************************
-    #Creates a user gives him a student role and then turns him into a student and selects his wishes
+    # Creates a user gives him a student role and then turns him into a student and selects his wishes
 
     User.create(
         :login => 'student1',
@@ -88,20 +88,20 @@ class AddData < ActiveRecord::Migration
                 :last_name => 'spirov',                 
                 :project_id => '')
             
-    Wish.create(
-            :student_id => '1',
-            :project_id => '1',
-            :wish => '1')
-                      
-    Wish.create(
-            :student_id => '1',
-            :project_id => '2',
-            :wish => '2')
-                      
-    Wish.create(
-            :student_id => '1',
-            :project_id => '3',
-            :wish => '3')
+#    Wish.create(
+#            :student_id => '1',
+#            :project_id => '1',
+#            :wish => '1')
+#                      
+#    Wish.create(
+#            :student_id => '1',
+#            :project_id => '2',
+#            :wish => '2')
+#                      
+#    Wish.create(
+#            :student_id => '1',
+#            :project_id => '3',
+#            :wish => '3')
                                 
 
 
@@ -128,20 +128,20 @@ class AddData < ActiveRecord::Migration
                 :last_name => 'sadsfj',                 
                 :project_id => '')
               
-        Wish.create(
-            :student_id => '2',
-            :project_id => '1',
-            :wish => '1')
-                      
-    Wish.create(
-            :student_id => '2',
-            :project_id => '2',
-            :wish => '2')
-                      
-    Wish.create(
-            :student_id => '2',
-            :project_id => '3',
-            :wish => '3')
+#        Wish.create(
+#            :student_id => '2',
+#            :project_id => '1',
+#            :wish => '1')
+#                      
+#    Wish.create(
+#            :student_id => '2',
+#            :project_id => '2',
+#            :wish => '2')
+#                      
+#    Wish.create(
+#            :student_id => '2',
+#            :project_id => '3',
+#            :wish => '3')
 
     
         User.create(
@@ -165,20 +165,20 @@ class AddData < ActiveRecord::Migration
                 :last_name => 'spdfgdfgdhg',                 
                 :project_id => '')
               
-        Wish.create(
-            :student_id => '3',
-            :project_id => '1',
-            :wish => '1')
+#        Wish.create(
+#            :student_id => '3',
+#            :project_id => '1',
+#            :wish => '1')
                       
-    Wish.create(
-            :student_id => '3',
-            :project_id => '2',
-            :wish => '2')
+#    Wish.create(
+#            :student_id => '3',
+#            :project_id => '2',
+#            :wish => '2')
                       
-    Wish.create(
-            :student_id => '3',
-            :project_id => '3',
-            :wish => '3')
+#    Wish.create(
+#            :student_id => '3',
+#            :project_id => '3',
+#            :wish => '3')
     
 
     
