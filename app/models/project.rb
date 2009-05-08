@@ -5,6 +5,6 @@ class Project < ActiveRecord::Base
 
   
   validates_uniqueness_of :title, :scope => :title
-  validates_presence_of     :title, :description, :resources, :discipline_ids
+  validates_presence_of     :title, :description
 
 end
