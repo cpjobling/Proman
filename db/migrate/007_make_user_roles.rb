@@ -25,8 +25,8 @@ class MakeUserRoles < ActiveRecord::Migration
   
   protected
   def self.assign_role(login, role) 
-  	the_user = User.find(:first, :conditions => ["login = ?", login])
-  	the_role = Role.find(:first, :conditions => ["name = ?", role])
+  	the_user = User.find_by_login(login)
+  	the_role = Role.find_by_name(role)
   	puts the_user.roles
   	the_user.roles << the_role
   	the_user.save

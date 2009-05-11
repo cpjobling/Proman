@@ -1,3 +1,5 @@
+# An admin, student, coordinator and real member of staff
+
 admin:
     id: 1
     login: admin
@@ -14,8 +16,9 @@ admin:
        
 # A dummy student
 student:
-    login: 000000
-    email: 000000@Swansea.ac.uk
+    id: 2
+    login: 111111
+    email: 111111@Swansea.ac.uk
     salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
     crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
     title: Mr
@@ -26,6 +29,7 @@ student:
           
 # A dummy staff member
 academic:
+    id: 3
     login: A.N.Academic
     salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
     crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # staff
@@ -38,6 +42,7 @@ academic:
 
 # A dummy coordinator
 coordinator:
+    id: 4
     login: A.Coordinator
     salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
     crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # coordinator
@@ -51,6 +56,7 @@ coordinator:
 # A real staff member (Dr Jobling is Module Coordinator)!
 # Obviously this is not the password that is in production!
 cpj:
+    id: 5
     login: C.P.Jobling
     email: C.P.Jobling@swansea.ac.uk
     salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd

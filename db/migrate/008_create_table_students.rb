@@ -4,7 +4,7 @@ extend MigrationHelpers
   def self.up
     create_table "students" do |t|
       t.integer :user_id
-      t.decimal :grade
+      t.decimal :grade, :precision=>10, :scale=>2
       t.integer :project_id
     end
    add_foreign_key("students", "user_id", "users")

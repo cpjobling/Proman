@@ -5,7 +5,7 @@ class MakeDummyUsers < ActiveRecord::Migration
   	down
   	
     # Create uses from fixture ... see dev_data/README.txt
-    directory = File.join(File.dirname(__FILE__), 'dev_data')
+    directory = File.join(File.dirname(__FILE__), '../../test/fixtures')
     Fixtures.create_fixtures(directory, "users")
   end
 
