@@ -1,28 +1,66 @@
-quentin:
-  id: 1
-  login: quentin
-  email: quentin@example.com
-  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
-  created_at: <%= 5.days.ago.to_s :db %>
-
-
-
-aaron:
-  id: 2
-  login: aaron
-  email: aaron@example.com
-  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
-  created_at: <%= 1.days.ago.to_s :db %>
-
-
-
 admin:
-  id: 3
+  id: 1
   login: admin
-  email: admin@example.com
+  email: EEE.Webmaster@Swansea.ac.uk
+  first_name: Proman
+  last_name: Administrator
+  title: 
+  staff_or_student_number: 099999
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
   crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   # activation_code: adminscode # only if you're activating new signups
   created_at: <%= 1.days.ago.to_s :db %>
+  
+       
+# A dummy student
+student:
+	login: 000000
+	password: student
+	password_confirmation: student
+    email: 000000@Swansea.ac.uk
+    salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+    crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+    title: Mr
+    first_name: John
+    last_name: Doe
+    staff_or_student_number: 000000
+    created_at: <%= 5.days.ago.to_s :db %>
+          
+# A dummy staff member
+academic:
+    login: A.N.Academic
+    password: staff
+    password_confirmation: staff
+    salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+    crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # staff
+    email: A.N.Academic@Swansea.ac.uk
+    title: Prof.
+    first_name: Anne
+    last_name: Academic
+    staff_or_student_number: 099998
+    created_at: <%= 5.days.ago.to_s :db %>
+
+# A dummy coordinator
+coordinator:
+    login: A.Coordinator
+    salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+    crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # coordinator
+    password: coordinator
+    password_confirmation: coordinator
+    email: A.Coordinator@Swansea.ac.uk
+    title: Dr.
+    first_name: Anthony
+    last_name: Coordinator
+    staff_or_student_number: 099997
+    created_at: <%= 5.days.ago.to_s :db %>    
+
+# A real staff member (Dr Jobling is Module Coordinator)!
+login: C.P.Jobling
+    email: C.P.Jobling@swansea.ac.uk
+    salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+    crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+    title: Dr
+    first_name: Chris
+    last_name: Jobling
+    staff_or_student_number: 039934
+    created_at: <%= 100.days.ago.to_s :db %>
