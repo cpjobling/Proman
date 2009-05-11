@@ -1,39 +1,34 @@
 class MakeUserRoles < ActiveRecord::Migration
   def self.up
-    admin_role = Role.find_by_sql("select id from roles where name='admin';")
-    student_role = Role.find_by_sql("select id from roles where name='student';")
-    staff_role = Role.find_by_sql("select id from roles where name='staff';")
-    coordinator_role = Role.find_by_sql("select id from roles where name='coordinator';")
 
-    admin = User.find(1); # admin user
-    # has admin (superuser) role
-    admin.roles=admin_role
-    admin.save
+    # admin user has admin (superuser) role
+    assign_role('admin', 'admin') 
 
-    student = User.find(2); # dummy student user
-    # has student role
-    student.roles=student_role
-    student.save
+    # dummy student user has student role
+    assign_role('111111', 'student') 
 
-    staff = User.find(3); # dummy staff user
-    # has staff role
-    staff.roles=staff_role
-    staff.save
+    # dummy staff user has staff role
+    assign_role('A.N.Academic', 'staff') 
     
-    coordinator = User.find(4); # dummy coordinator user
-    # has staff and coordinatr roles
-    coordinator.roles=staff_role
-    coordinator.roles=coordinator_role
-    coordinator.save
+    # dummy coordinator has staff and coordinatr roles
+    assign_role('A.Coordinator', 'coordinator')
+    assign_role('A.Coordinator', 'staff')  
     
-    cpj = User.find(5); # Real project coordinator user (Dr C.P. Jobling)
-    # has admin, coordinator and staff roles.
-    cpj.roles=staff_role
-    cpj.roles=coordinator_role
-    cpj.roles=admin_role
-    cpj.save
+    # this real user has admin, staff and coordinator role
+    assign_role('C.P.Jobling', 'admin')
+    assign_role('C.P.Jobling', 'coordinator')
+    assign_role('C.P.Jobling', 'staff')
   end
 
   def self.down
+  end
+  
+  protected
+  def self.assign_role(login, role) 
+  	the_user = User.find(:first, :conditions => ["login = ?", login])
+  	the_role = Role.find(:first, :conditions => ["name = ?", role])
+  	puts the_user.roles
+  	the_user.roles << the_role
+  	the_user.save
   end
 end
