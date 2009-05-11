@@ -10,7 +10,7 @@ class AddSomeData < ActiveRecord::Migration
     #********************************************************************
     # Creates a user gives him a student role and then turns him into a  
     # student and selects his wishes
-    student1 = User.create(
+    user = User.create(
         :login => '111112',
         :first_name => 'kirouuuu',            
         :last_name => 'spirov', 
@@ -22,32 +22,32 @@ class AddSomeData < ActiveRecord::Migration
 
     
     student_role = Role.find_by_name('student')
-    student.roles << student_role
-    student.save
+    user.roles << student_role
+    user.save
     
-    Student.create(
-        :user_id => student1.id,                  
+    student1 = Student.create(
+        :user_id => user.id,                  
         :grade => '100.00',                                  
         :project_id => '')
             
     Wish.create(
-        :student_id => student.id,
+        :student_id => student1.id,
         :project_id => '1',
         :wish => '1')
                       
     Wish.create(
-        :student_id => student.id,
+        :student_id => student1.id,
         :project_id => '2',
         :wish => '2')
                       
     Wish.create(
-        :student_id => student.id,
+        :student_id => student1.id,
         :project_id => '3',
         :wish => '3')
                                 
 # Another student
 
-    student2 =  User.create(
+    user =  User.create(
         :login => '111113',
         :first_name => 'mirouuuu',            
         :last_name => 'sadsfj',
@@ -57,30 +57,31 @@ class AddSomeData < ActiveRecord::Migration
         :title => 'Miss',
         :staff_or_student_number => '111113')
 
-    student2.roles << student_role
-    student.save
+    user.roles << student_role
+    user.save
     
-    Student.create(
-        :user_id => student2.id,                  
+    student2 = Student.create(
+        :user_id => user.id,                  
         :grade => '90.0',
-        :project_id = '')                  
+        :project_id => '')                  
               
     Wish.create(
-       :student_id => '2',
-       :project_id => '1',
-       :wish => '1')
-   Wish.create(
-       :student_id => '2',
-       :project_id => '2',
-       :wish => '2')
+      :student_id => student2.id,
+      :project_id => '1',
+      :wish => '1')
+
+    Wish.create(
+      :student_id => student2.id,
+      :project_id => '2',
+      :wish => '2')
                 
    Wish.create(
-      :student_id => '2',
+      :student_id => student2.id,
       :project_id => '3',
       :wish => '3')
 
 # And another    
-    student3 = User.create(
+    user = User.create(
         :login => '111114',
         :first_name => 'ivan',            
         :last_name => 'spdfgdfgdhg', 
@@ -90,32 +91,33 @@ class AddSomeData < ActiveRecord::Migration
         :title => 'Ms',
         :staff_or_student_number => '111114')
 
-    student3.roles << student_role
-    student3.save
+    user.roles << student_role
+    user.save
     
-    Student.create(
-        :user_id => '6',                  
+    student3 = Student.create(
+        :user_id => user.id,                  
         :grade => '80.0',                                
         :project_id => '')
               
     Wish.create(
-         :student_id => '3',
+         :student_id => student3.id,
          :project_id => '1',
          :wish => '1')
                       
     Wish.create(
-         :student_id => '3',
+         :student_id => student3.id,
          :project_id => '2',
          :wish => '2')
                       
    Wish.create(
-        :student_id => '3',
+        :student_id => student3.id,
         :project_id => '3',
         :wish => '3')
 
   end
 
   def self.down
-    
+    Wish.delete_all
+    Student.delete_all
   end
 end

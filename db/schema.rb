@@ -9,10 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 17) do
+ActiveRecord::Schema.define(:version => 18) do
 
   create_table "disciplines", :force => true do |t|
     t.string "name"
+    t.string "long_name"
   end
 
   create_table "disciplines_projects", :id => false, :force => true do |t|
@@ -24,8 +25,8 @@ ActiveRecord::Schema.define(:version => 17) do
   add_index "disciplines_projects", ["project_id"], :name => "index_disciplines_projects_on_project_id"
 
   create_table "projects", :force => true do |t|
-    t.integer  "createdby"
-    t.text     "title"
+    t.integer  "created_by"
+    t.string   "title"
     t.text     "description"
     t.text     "resources"
     t.datetime "created_at"
@@ -46,9 +47,9 @@ ActiveRecord::Schema.define(:version => 17) do
 
   create_table "students", :force => true do |t|
     t.integer "user_id"
-    t.integer "grade",      :limit => 3
+    t.decimal "grade",      :precision => 10, :scale => 2
     t.integer "project_id"
-    t.integer "tour",                    :default => 1
+    t.integer "tour",                                      :default => 1
   end
 
   add_index "students", ["user_id"], :name => "fk_students_user_id"
@@ -56,15 +57,17 @@ ActiveRecord::Schema.define(:version => 17) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
+    t.string   "title",                     :limit => 10
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
+    t.string   "staff_or_student_number",   :limit => 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "wishes", :id => false, :force => true do |t|
