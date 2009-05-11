@@ -1,6 +1,6 @@
 require "migration_helpers"
 class CreateTableStudents < ActiveRecord::Migration
-extend MigrationHelpers
+  extend MigrationHelpers
   def self.up
     create_table "students" do |t|
       t.integer :user_id

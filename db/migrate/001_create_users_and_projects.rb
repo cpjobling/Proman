@@ -2,7 +2,6 @@ require "migration_helpers"
 class CreateUsersAndProjects < ActiveRecord::Migration
 extend MigrationHelpers
   def self.up
-  	down
     create_table "users", :force => true do |t|
       t.string :login
       t.string :title, :limit => 10
@@ -18,8 +17,8 @@ extend MigrationHelpers
       t.timestamps   
     end
     
-    create_table :projects do |t|
-      t.integer :user_id
+    create_table :projects, :force => true do  |t|
+      t.integer :created_by
       t.string :title
       t.text :description
       t.text :resources
@@ -27,7 +26,7 @@ extend MigrationHelpers
       t.timestamps
     end
     
-    add_foreign_key("projects", "user_id", "users")
+    add_foreign_key("projects", "created_by", "users")
 
   end
 
