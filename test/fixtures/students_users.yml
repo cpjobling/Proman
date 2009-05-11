@@ -1,3 +1,0 @@
-admin_is_admin:
-  user_id: 3 # admin
-  student_id: 1 # admin role
