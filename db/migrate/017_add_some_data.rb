@@ -16,11 +16,11 @@ class AddSomeData < ActiveRecord::Migration
         :last_name => 'spirov', 
         :password => 'student1',
         :password_confirmation => 'student1',
-        :email => '111113@swan.ac.uk',
+        :email => '111112@swan.ac.uk',
         :title => 'Mr',
         :staff_or_student_number => '111112')
 
-    
+    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
     student_role = Role.find_by_name('student')
     user.roles << student_role
     user.save
@@ -57,6 +57,7 @@ class AddSomeData < ActiveRecord::Migration
         :title => 'Miss',
         :staff_or_student_number => '111113')
 
+    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
     user.roles << student_role
     user.save
     
@@ -91,6 +92,7 @@ class AddSomeData < ActiveRecord::Migration
         :title => 'Ms',
         :staff_or_student_number => '111114')
 
+    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
     user.roles << student_role
     user.save
     
