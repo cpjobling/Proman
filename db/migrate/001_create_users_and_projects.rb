@@ -1,5 +1,8 @@
-class CreateUsers < ActiveRecord::Migration
+require "migration_helpers"
+class CreateUsersAndProjects < ActiveRecord::Migration
+extend MigrationHelpers
   def self.up
+  	down
     create_table "users", :force => true do |t|
       t.string :login
       t.string :title, :limit => 10
@@ -14,9 +17,22 @@ class CreateUsers < ActiveRecord::Migration
       
       t.timestamps   
     end
+    
+    create_table :projects do |t|
+      t.integer :user_id
+      t.string :title
+      t.text :description
+      t.text :resources
+
+      t.timestamps
+    end
+    
+    add_foreign_key("projects", "user_id", "users")
+
   end
 
   def self.down
-    drop_table "users"
+    drop_table :projects
+    drop_table :users
   end
 end
