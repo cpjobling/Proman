@@ -25,8 +25,6 @@ extend MigrationHelpers
 
       t.timestamps
     end
-    
-    add_foreign_key("projects", "created_by", "users")
 
   end
 

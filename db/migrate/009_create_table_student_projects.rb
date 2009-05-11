@@ -11,8 +11,6 @@ class CreateTableStudentProjects < ActiveRecord::Migration
   end
 
   def self.down
-    add_foreign_key("wishes", "student_id")
-    add_foreign_key("wishes", "project_id")
     drop_table "wishes"
   end
 end
