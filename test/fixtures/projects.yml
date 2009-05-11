@@ -27,7 +27,7 @@ project4:
   created_by: 4
   title: Project 4
   description: This is the fourth dummy project proposed by the staff member create by staff member with user_id = 4 (Dr A. Coordinator).
-  resources: none)
+  resources: none
             
 project5:
   id: 5
@@ -61,7 +61,7 @@ project9:
   id: 9
   created_by: 5
   title: Project 9
-  description: This is the fourth dummy project proposed by the staff member create by staff member with user_id = 5 (Dr C.P. Jobling).
+  description: This is the ninth dummy project proposed by the staff member create by staff member with user_id = 5 (Dr C.P. Jobling).
   resources: none
             
 project10:
