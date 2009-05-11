@@ -24,7 +24,7 @@ student:
     title: Mr
     first_name: John
     last_name: Doe
-    staff_or_student_number: 000000
+    staff_or_student_number: 111111
     created_at: <%= 5.days.ago.to_s :db %>
           
 # A dummy staff member
