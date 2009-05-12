@@ -2,7 +2,7 @@ class MakeUserRoles < ActiveRecord::Migration
   def self.up
 
     # admin user has admin (superuser) role
-    assign_role('admin', 'Admin') 
+    assign_role('admin', 'admin') 
 
     # dummy student user has student role
     assign_role('111111', 'student') 

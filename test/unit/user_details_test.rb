@@ -25,7 +25,7 @@ class UserDetailsTest < Test::Unit::TestCase
   		:email => "academic@xyz.com",
   		:first_name => "Jools",
   		:last_name => "Holland",
-  		:staff_or_student_name => "777777",
+  		:staff_or_student_number => "777777",
   		:password => "test",
   		:password_confirmation => "test")
   		
@@ -38,7 +38,7 @@ class UserDetailsTest < Test::Unit::TestCase
   		:email => users(:student).email,
   		:first_name => "Herman",
   		:last_name => "Munster",
-  		:staff_or_student_name => "777777",
+  		:staff_or_student_number => "777777",
   		:password => "test",
   		:password_confirmation => "test")
   		
@@ -71,15 +71,49 @@ class UserDetailsTest < Test::Unit::TestCase
   end
   
   def test_new_user_is_not_admin
-  	guest = user(:academic)
-  	assert !user.has_role?('Admin')
+  	guest = users(:academic)
+  	assert !guest.has_role?('Admin'), "Guest user shouldn't have admin role"
   end
   
-  def test_add_student_role
+  def test_admin_user_has_admin_role
+  	admin = users(:admin)
+  	assert admin.has_role?('Admin'), "admin user should have the 'Admin' role"	
+  end
+  
+  def test_student_user_should_have_student_role
   	user = users(:student)
-  	user.add_role('student')
-  	assert user.has_role?('student'), "user should have role student"
+  	assert user.has_role?('student'), "user should have student role"
   end
   
+  def test_academic_user_should_have_staff_role
+  	user = users(:academic)
+  	assert user.has_role?('staff'), "user should have staff role"
+  end
+  
+  def test_coordinator_user_should_have_staff_and_coordinator_roles
+  	user = users(:coordinator)
+  	assert user.has_role?('coordinator'), 
+  	     "user should have coordinator role"
+  	assert user.has_role?('staff'), "user should have staff role"
+  end
+  
+  def test_add_role
+  	 user = User.create(:login => "newuser",
+  		:email => "newuser@xyz.com",
+  		:first_name => "Bernard",
+  		:last_name => "Manning",
+  		:staff_or_student_number => "777777",
+  		:password => "test",
+  		:password_confirmation => "test")
+  		
+  	 roles = Role.find(:all)
+  	 roles.each do |role|
+  		assert !user.has_role?(role.name), 
+            "Shouldn't yet have role #{role.name}"
+  		user.add_role(role.name)
+  		assert user.has_role?(role.name),
+  		    "Should now have role #{role.name}"
+  	end
+  end
   
 end

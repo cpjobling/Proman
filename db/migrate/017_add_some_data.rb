@@ -10,7 +10,7 @@ class AddSomeData < ActiveRecord::Migration
     #********************************************************************
     # Creates a user gives him a student role and then turns him into a  
     # student and selects his wishes
-    user = User.create(
+    user = User.new(
         :login => '111112',
         :first_name => 'kirouuuu',            
         :last_name => 'spirov', 
@@ -19,6 +19,7 @@ class AddSomeData < ActiveRecord::Migration
         :email => '111112@swan.ac.uk',
         :title => 'Mr',
         :staff_or_student_number => '111112')
+    user.save!
 
     user.add_role('student')
     user.save
@@ -45,7 +46,7 @@ class AddSomeData < ActiveRecord::Migration
                                 
 # Another student
 
-    user =  User.create(
+    user =  User.new(
         :login => '111113',
         :first_name => 'mirouuuu',            
         :last_name => 'sadsfj',
@@ -54,8 +55,8 @@ class AddSomeData < ActiveRecord::Migration
         :email => '111113@swan.ac.uk',
         :title => 'Miss',
         :staff_or_student_number => '111113')
+    user.save!
 
-    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
     user.add_role('student')
     user.save
     
@@ -80,7 +81,7 @@ class AddSomeData < ActiveRecord::Migration
       :wish => '3')
 
 # And another    
-    user = User.create(
+    user = User.new(
         :login => '111114',
         :first_name => 'ivan',            
         :last_name => 'spdfgdfgdhg', 
@@ -89,8 +90,7 @@ class AddSomeData < ActiveRecord::Migration
         :email => '111114@swan.ac.uk',
         :title => 'Ms',
         :staff_or_student_number => '111114')
-
-    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
+    user.save!
     user.add_role('student')
     user.save
     
