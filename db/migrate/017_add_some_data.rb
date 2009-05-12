@@ -21,8 +21,7 @@ class AddSomeData < ActiveRecord::Migration
         :staff_or_student_number => '111112')
 
     puts "Created: used.id = #{user.id}: #{ user.to_s}" 
-    student_role = Role.find_by_name('student')
-    user.roles << student_role
+    user.add_role('student')
     user.save
     
     student1 = Student.create(
@@ -58,7 +57,7 @@ class AddSomeData < ActiveRecord::Migration
         :staff_or_student_number => '111113')
 
     puts "Created: used.id = #{user.id}: #{ user.to_s}" 
-    user.roles << student_role
+    user.add_role('student')
     user.save
     
     student2 = Student.create(
@@ -93,7 +92,7 @@ class AddSomeData < ActiveRecord::Migration
         :staff_or_student_number => '111114')
 
     puts "Created: used.id = #{user.id}: #{ user.to_s}" 
-    user.roles << student_role
+    user.add_role('student')
     user.save
     
     student3 = Student.create(

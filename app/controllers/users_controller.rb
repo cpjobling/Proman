@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
- require_role "admin", :for => :edit 
+  require_role "Admin", :for => :edit 
 
   # render new.rhtml
   def new
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    handle_roles_users
+    handle_user_roles
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
       redirect_to :action=>'show', id=>@user
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
   
   private
-    def handle_roles_users
+    def handle_user_roles
       if params['role_ids']
         @user.roles.clear
         roles = params['role_ids'].map { |id| Role.find(id) }

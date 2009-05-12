@@ -2,7 +2,7 @@ class MakeUserRoles < ActiveRecord::Migration
   def self.up
 
     # admin user has admin (superuser) role
-    assign_role('admin', 'admin') 
+    assign_role('admin', 'Admin') 
 
     # dummy student user has student role
     assign_role('111111', 'student') 
@@ -15,7 +15,7 @@ class MakeUserRoles < ActiveRecord::Migration
     assign_role('A.Coordinator', 'staff')  
     
     # this real user has admin, staff and coordinator role
-    assign_role('C.P.Jobling', 'admin')
+    assign_role('C.P.Jobling', 'Admin')
     assign_role('C.P.Jobling', 'coordinator')
     assign_role('C.P.Jobling', 'staff')
   end
@@ -25,9 +25,9 @@ class MakeUserRoles < ActiveRecord::Migration
   
   protected
   def self.assign_role(login, role) 
+  	puts "Assigning role=#{role} to #{login}"
   	the_user = User.find_by_login(login)
-  	the_role = Role.find_by_name(role)
-  	the_user.roles << the_role
+  	the_user.add_role(role)
   	the_user.save
   end
 end

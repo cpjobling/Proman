@@ -3,7 +3,7 @@ admin_role:
   name: admin
 staff_role:
   id: 2
-  name: user
+  name: staff
 student_role:
   id: 3
   name: student

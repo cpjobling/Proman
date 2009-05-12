@@ -37,13 +37,7 @@ ActiveRecord::Schema.define(:version => 18) do
     t.string "name"
   end
 
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-  end
-
-  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
-  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "students", :force => true do |t|
     t.integer "user_id"
@@ -54,6 +48,11 @@ ActiveRecord::Schema.define(:version => 18) do
 
   add_index "students", ["user_id"], :name => "fk_students_user_id"
   add_index "students", ["project_id"], :name => "fk_students_project_id"
+
+  create_table "user_roles", :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login"
