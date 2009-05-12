@@ -72,7 +72,7 @@ class UsersControllerTest < Test::Unit::TestCase
     end
   end  
   
-    def test_should_require_staff_or_student_number_on_signup
+  def test_should_require_staff_or_student_number_on_signup
     assert_no_difference 'User.count' do
       create_user(:staff_or_student_number => nil)
       assert assigns(:user).errors.on(:staff_or_student_number)
