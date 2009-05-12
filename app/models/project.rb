@@ -6,6 +6,6 @@ class Project < ActiveRecord::Base
 
   
   validates_uniqueness_of :title, :scope => :title
-  validates_presence_of   :title, :description
+  validates_presence_of   :title, :description, :created_by
 
 end
