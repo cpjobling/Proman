@@ -69,4 +69,17 @@ class UserDetailsTest < Test::Unit::TestCase
   		assert !guest.has_role?(role), "Should not have role #{role.to_s}"
   	end
   end
+  
+  def test_new_user_is_not_admin
+  	guest = user(:academic)
+  	assert !user.has_role?('Admin')
+  end
+  
+  def test_add_student_role
+  	user = users(:student)
+  	user.add_role('student')
+  	assert user.has_role?('student'), "user should have role student"
+  end
+  
+  
 end
