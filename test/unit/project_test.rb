@@ -35,9 +35,18 @@ class ProjectTest < ActiveSupport::TestCase
 			   :conditions => ["created_by = ?", user.id])
 			projects.each do |project|
 				assert_equal project.created_by, user.id, 
-				   "user didn't create project" 
+				   "user #{user.id} didn't create project #{project.id}" 
 			end
       	end	
   	  end
+  end
+  
+  def test_project_can_be_carbon_critical
+  	project = projects(:project1)
+  	assert !project.carbon_critical, 
+  		"project by defualt should not be carbon critical"
+  	project.carbon_critical = true
+  	assert project.carbon_critical, 
+  		"project by should now be carbon critical"
   end
 end
