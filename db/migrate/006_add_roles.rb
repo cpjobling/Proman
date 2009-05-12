@@ -1,10 +1,10 @@
 class AddRoles < ActiveRecord::Migration
   def self.up
   	down
-    role = Role.create :name=>"admin"; role.save()
-    role = Role.create :name=>"staff"; role.save()
-    role = Role.create :name=>"student"; role.save()
-    role = Role.create :name=>"coordinator"; role.save()
+
+    # Create roles from fixture ... see dev_data/README.txt
+    directory = File.join(File.dirname(__FILE__), '../../test/fixtures')
+    Fixtures.create_fixtures(directory, "roles")
   end
 
   def self.down
