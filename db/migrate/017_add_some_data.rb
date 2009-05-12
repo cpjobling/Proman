@@ -20,7 +20,6 @@ class AddSomeData < ActiveRecord::Migration
         :title => 'Mr',
         :staff_or_student_number => '111112')
 
-    puts "Created: used.id = #{user.id}: #{ user.to_s}" 
     user.add_role('student')
     user.save
     
