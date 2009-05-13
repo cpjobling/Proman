@@ -113,6 +113,9 @@ class ProjectTest < ActiveSupport::TestCase
   end
   
   def test_cant_add_unknown_discipline_to_project
+  	@project.suitable_for('cheesemakers')
+  	assert @project.disciplines.count(:all) == 0,
+  	  "There should be no cheesemakers"
   	
   end
   
