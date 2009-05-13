@@ -19,8 +19,8 @@ class ProjectController < ApplicationController
 
   def new
     @project = Project.new
-    @disciplines1 = {}
-    Discipline.find(:all).collect {|r| @disciplines1[r.name] = r.id }
+    @disciplines = {}
+    Discipline.find(:all).collect {|r| @disciplines[r.name] = r.id }
   end
 
   def create

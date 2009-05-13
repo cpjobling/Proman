@@ -1,31 +1,12 @@
-<h1>Edit Project</h1>
+<h1>Edit: <%=h @project.title %></h1>
 
 <p> <%= link_to "View all", {:action => 'order_by_creator'} %> | <%= link_to "View by discipline", {:action => 'order_by_disciplines'} %></p>
   
 <%form_for :project, :url => {:action=>'update', :id => @project.id} do |f|%>
+	
+<%= render :partial => "project", :object => @project, :locals => {:f => f, :disciplines => @disciplines}%>
 
-       <p><label for="project_carbon_critical">Carbon critical:</label>
-     	<%= f.check_box :carbon_critical %>
-     	
-     	   <p><label for="project_title">Title:</label>
-    <%= f.text_field :title %></p>
-  
-   <p><label for="project_description">Description:</label><br />
-  <%= f.text_area  :description %></p>
-  
-     <p><label for="project_resources">Resources:</label><br />
-  <%= f.text_area  :resources %></p>
-  
+  <%= f.submit "Update" %> <%= link_to 'Create new project', {:action => 'new'}%>
+<% end %>
 
-  
-  <p>Suitable for:<br />
-    <select id='discipline_ids' name="discipline_ids[]" multiple="multiple">
-        <%= options_for_select(@disciplines, 
-           @project.disciplines.collect {|d| d.id }) %>
-      </select>
-  </p>
-  
-
-  <%= f.submit "Update" %>
-<%end%>
-  <p><%= link_to 'Back', {:action => 'index'} %></p>
+<p><%= link_to 'Back', {:action => 'index'} %></p>
