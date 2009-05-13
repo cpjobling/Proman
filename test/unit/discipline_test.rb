@@ -10,6 +10,8 @@ class DisciplineTest < ActiveSupport::TestCase
   
   def test_project_discipline_is_a_discipline
     # test that adding a discipline adds the discipline
+    @project.suitable_for(@icct)
+    assert @project in @icct.projects.find_all
   end
   
   
