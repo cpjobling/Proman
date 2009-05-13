@@ -24,6 +24,12 @@ class Project < ActiveRecord::Base
   end
   
   # Convenience method to make project suitable for all disciplies
+  def suitable_for_all
+  	disciplines = Discipline.find(:all)
+  	disciplines.each do |discipline|
+  		self.suitable_for(discipline.name)
+  	end
+  end
   
   # Convenience method to add make a project suitable for a named discipline
   def suitable_for(discipline)
@@ -32,5 +38,17 @@ class Project < ActiveRecord::Base
   		  self.disciplines << the_discipline
   		end
   	end
+  end
+  
+  # Convenience method to determine if a project is suitable for no disciplines.
+  # That is has not been assigned to any disciplines.
+  def suitable_for_none?
+  	return self.disciplines.empty?
+  end
+  
+  # Convenience method to clear suitability record, e.g. when resetting
+  # disciplines in an update method
+  def suitable_for_none
+  	self.disciplines.delete_all
   end
 end

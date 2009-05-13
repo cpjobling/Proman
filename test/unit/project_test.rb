@@ -49,7 +49,7 @@ class ProjectTest < ActiveSupport::TestCase
   
   def test_project_can_be_carbon_critical
   	assert !@project.carbon_critical, 
-  		"project by defualt should not be carbon critical"
+  		"project by default should not be carbon critical"
   	@project.carbon_critical = true
   	assert @project.carbon_critical, 
   		"project by should now be carbon critical"
@@ -116,10 +116,35 @@ class ProjectTest < ActiveSupport::TestCase
   	@project.suitable_for('cheesemakers')
   	assert @project.disciplines.count(:all) == 0,
   	  "There should be no cheesemakers"
-  	
   end
   
   def test_cant_add_duplicate_discipline_to_project
-  	
+  	@project.suitable_for(@icct.name)
+  	assert @project.disciplines.count(:all) == 1,
+  	  "Should be 1 suitable discipline for project"
+  	@project.suitable_for(@icct.name)
+  	assert @project.disciplines.count(:all) == 1,
+  	  "Should still be 1 suitable discipline for project"
+  	@project.suitable_for(disciplines(:eee).name)
+  	assert @project.disciplines.count(:all) == 2,
+  	  "Should now be 2 suitable discipline for project"
+  end
+  
+  def test_suitable_for_all
+  	@project.suitable_for_all
+  	assert @project.suitable_for_all?, "Project is suitable for all"
+  end
+  
+  def test_discipline_suitable_for_none
+  	@project.suitable_for_all
+  	@project.suitable_for_none
+  	assert ! @project.suitable_for_all?, "Project is suitable for all"
+  	assert ! @project.suitable_for_any?, "Project is not suitable for any"
+  end
+  
+  def test_discipline_suitable_for_none?
+  	@project.suitable_for_all
+  	@project.suitable_for_none
+  	assert @project.suitable_for_none?, "Project is suitable for none"
   end
 end
