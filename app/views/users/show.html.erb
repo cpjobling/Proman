@@ -12,4 +12,4 @@
 <b>Role(s):</b> <%=h @user.roles.collect {|r| r.name}.join(', ') %>
 </p>
 <%= link_to 'Edit', :action => 'edit', :id => @user %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Back', :action => 'index' %>
