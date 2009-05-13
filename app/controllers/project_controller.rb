@@ -8,19 +8,19 @@ class ProjectController < ApplicationController
   def edit
     @project = Project.find(params[:id])
     @disciplines = {}
-    Discipline.find(:all).collect {|r| @disciplines[r.name] = r.id }
+    Discipline.find(:all).collect {|r| @disciplines[r.long_name] = r.id }
   end
 
   def show
     @project = Project.find(params[:id])
     @disciplines = {}
-    Discipline.find(:all).collect {|r| @disciplines[r.name] = r.id }
+    Discipline.find(:all).collect {|r| @disciplines[r.long_name] = r.id }
   end
 
   def new
     @project = Project.new
     @disciplines = {}
-    Discipline.find(:all).collect {|r| @disciplines[r.name] = r.id }
+    Discipline.find(:all).collect {|r| @disciplines[r.long_name] = r.id }
   end
 
   def create

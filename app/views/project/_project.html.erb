@@ -14,7 +14,7 @@
   
   <p>Suitable for:<br />
     <select id='discipline_ids' name="discipline_ids[]" multiple="multiple">
-        <%= options_for_select(disciplines, 
+        <%= options_for_select(disciplines.sort, 
            project.disciplines.collect {|d| d.id }) %>
       </select>
   </p>
