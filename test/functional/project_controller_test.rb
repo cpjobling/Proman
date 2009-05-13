@@ -1,8 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'project_controller'
 
 class ProjectControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+
+  fixtures :project
+
+  def setup
+    @controller = ProjectController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
   end
+
 end
