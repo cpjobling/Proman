@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(:version => 19) do
   add_index "students", ["user_id"], :name => "fk_students_user_id"
   add_index "students", ["project_id"], :name => "fk_students_project_id"
 
-  create_table "user_roles", :force => true do |t|
+  create_table "user_roles", :id => false, :force => true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
