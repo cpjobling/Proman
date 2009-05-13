@@ -1,4 +1,5 @@
-<h1>Projects ordered by Staff</h1>
+<h1>Projects ordered by Supervisor</h1>
+<p> <%= link_to "View all", {:action => 'index'} %> | <%= link_to "View by discipline", {:action => 'order_by_disciplines'} %></p>
 <%
  curr_staff = '';
 %>
@@ -31,6 +32,3 @@
       <%end%>
   </ul>
 <%end%>
-
-<p>To veiw projects sorted by the disciplines they are suitable for <%= link_to "Click Here", {:action => 'order_by_disciplines'} %></p>
-<p><%= link_to 'Back', {:action => 'index'} %></p>

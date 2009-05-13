@@ -1,13 +1,29 @@
-<h1>list !!!!!</h1>
+<h1>Project list</h1>
 <% if @projects.blank? %>
     <p>no projects to display</p>
 <%else%>
-  <ul id="projects">
+  <p> <%= link_to "View by supervisor", {:action => 'order_by_creator'} %> | <%= link_to "View by discipline", {:action => 'order_by_disciplines'} %></p>
+  <table border="0">
+  	<thead><td>Number</td><td>Title</td><td>Supervisor</td><td>Email</td></thead>
+  	<tbody>
     <% @projects.each do |c| %>
-      <li>
-        <%= link_to c.title, {:action => 'show', :id => c.id} -%>   created by: <%= User.find(c.createdby).last_name -%>
+      <% u = User.find(c.created_by) %>
+      <tr>
+      	<td>
+      	  <%= c.id -%>
+      	</td>
+      	<td>
+          <%= link_to c.title, {:action => 'show', :id => c.id} -%>
+        </td>
+        <td><%= u.title -%> 
+               <%= u.first_name -%>
+               <%= u.last_name -%>
+        </td>
+        <td><a href="mailto:<%= u.email -%>">
+               	 <%= u.email -%></a>
+        </td>
+        </tr>
       <%end%>
-  </ul>
+  </tbody>
+  </table>
 <%end%>
-<p>To veiw projects sorted by creator <%= link_to "Click Here", {:action => 'order_by_creator'} %></p>
-<p>To veiw projects sorted by the disciplines they are suitable for <%= link_to "Click Here", {:action => 'order_by_disciplines'} %></p>

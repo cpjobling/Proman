@@ -3,7 +3,7 @@ require 'project_controller'
 
 class ProjectControllerTest < ActionController::TestCase
 
-  fixtures :project
+  fixtures :projects
 
   def setup
     @controller = ProjectController.new
@@ -11,4 +11,9 @@ class ProjectControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+  def test_get_index
+  	get :index
+  	assert_response :success
+  end
+  
 end

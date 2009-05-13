@@ -1,28 +1,30 @@
-<h1>View/Edit Projects</h1>
-<%form_for :project, @project, :url => {:action=>'update' , :id=>@project.id} do |f|%>
-
-
-  <p><label for="project_createdby">Created by:</label>
-  <%= f.text_field 'createdby' %></p>
+<h1><%= @project.title %></h1>
   
-   <p><label for="project_title">Title:</label>
-    <%= f.text_field 'title' %></p>
+  <% supervisor = User.find(@project.created_by) %>
+  <p><strong>Supervisor</strong>: 
+  	<%= supervisor.title %> 
+  	<%= supervisor.first_name %>
+  	<%= supervisor.last_name %>
+  	             (<a href="mailto:<%= supervisor.email %>"><%= supervisor.email %></a>)
+  	</p>             
+    <p>
+  	 <strong>Research Group</strong>: placeholder
+   </p>
+            
+   <p><strong>Description</strong>: <%= @project.description %></p>
   
-   <p><label for="project_description">Description:</label>
-  <%= f.text_area  'description' %></p>
+   <p><strong>Resources</strong>: <%= @project.resources %></p>
   
-     <p><label for="project_resources">Resources:</label>
-  <%= f.text_field  'resources' %></p>
-  
-  
-  
-  <p>Suitable for:
-    <select id='discipline_ids' name="discipline_ids[]" multiple="multiple">
-        <%= options_for_select(@disciplines, @project.disciplines.collect {|d| d.id }) %>
-      </select>
+   <% if @project.carbon_critical %>
+   	<p>This project may be suitable for the Atkins Carbon Critical award.</p>
+   <% end %>
+  <p><strong>Suitable for</strong>:
+    <ul>
+    	<% @project.disciplines.each do |d| %>
+    	  <li><%= d.long_name %></li>
+    	<% end %>
+    </ul>
   </p>
   
-
-  <%= f.submit "Update" %>
-<%end%>
-  <p><%= link_to 'Back', {:action => 'index'} %></p>
+  <%= link_to 'Edit', :action => 'edit', :id => @project %> |
+  <%= link_to 'List', :action => 'list' %>

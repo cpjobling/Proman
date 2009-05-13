@@ -4,6 +4,12 @@ class ProjectController < ApplicationController
   def index
     @projects = Project.find(:all)
   end
+  
+  def edit
+    @project = Project.find(params[:id])
+    @disciplines = {}
+    Discipline.find(:all).collect {|r| @disciplines[r.name] = r.id }
+  end
 
   def show
     @project = Project.find(params[:id])
@@ -15,7 +21,6 @@ class ProjectController < ApplicationController
     @project = Project.new
     @disciplines1 = {}
     Discipline.find(:all).collect {|r| @disciplines1[r.name] = r.id }
-
   end
 
   def create
@@ -85,12 +90,12 @@ class ProjectController < ApplicationController
   end
 
   def projects_by_staff
-    @projects = Project.find_by_sql "SELECT * FROM projects WHERE createdby = #{session[:user_id]}"
+    @projects = Project.find_by_sql "SELECT * FROM projects WHERE created_by = #{session[:user_id]}"
     #@projects = Project.find(:all)
   end
 
   def order_by_creator
-    @projects = Project.find_by_sql "SELECT p.title, p.id, u.last_name FROM `projects` AS p, users AS u WHERE p.createdby = u.id ORDER BY u.last_name ASC"
+    @projects = Project.find_by_sql "SELECT p.title, p.id, u.last_name FROM `projects` AS p, users AS u WHERE p.created_by = u.id ORDER BY u.last_name ASC"
   end
   
     def order_by_disciplines
