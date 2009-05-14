@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	<title>Proman(beta) &ndash; <%= @title %></title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="Management tool for University Undergraduate Dissertation Projects, Developed in the School of Engineering, Swansea University." />
+	<meta name="keywords" content="Swansea, University, EG-353, Projects, School of Engineering, Open Source, Ruby on Rails" />
+	<meta name="robots" content="index, follow" />
+	<meta name="Author" content="Nicolay Parashkenov">
+	<meta name="Author" content="Dr Chris P. Jobling">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Language" content="en-gb">
+    <meta http-equiv="Pragma" content="no-cache">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<%= stylesheet_link_tag 'layout.css' %>
+    <!-- Required by Ruby on Rails -->
+    <script type="text/javascript" src="javascripts/prototype.js"></script>
+    <script type="text/javascript" src="javascripts/effects.js"></script>
+</head>
+<body>
+
+<div id="header">
+	<h1><span class="logo">Proman<sup>Beta</sup></span> </h1>
+	<h2><%= @title %></h2>
+    <%= render(:partial => "shared/tabs") %>
+	<%= render(:partial => "shared/navigation") %>
+</div>
+<div class="colmask threecol">
+	<div class="colmid">
+		<div class="colleft">
+			<div class="col1">
+				<!-- Column 1 start -->
+				<%= yield :layout %>
+				<!-- Column 1 end -->
+			</div>
+			<div class="col2">
+				<!-- Column 2 start -->
+				<%= yield :left_sidebar %>
+				<!-- Column 2 end -->
+			</div>
+			<div class="col3">
+				<!-- Column 3 start -->
+				<%= yield :right_sidebar %>
+				<!-- Column 3 end -->
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer">
+	<%= render(:partial => "shared/footer") %>
+</div>
+</body>
+</html>
