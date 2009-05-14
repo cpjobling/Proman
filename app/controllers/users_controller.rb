@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     if @user.errors.empty?
       self.current_user = @user
       redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up!"
+      flash[:notice] = "Thanks for registering. We'll be in touch when yur account is activated."
     else
       render :action => 'new'
     end

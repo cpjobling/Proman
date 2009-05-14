@@ -1,6 +1,5 @@
 class ProjectController < ApplicationController
 
- layout "standard"
  
  # require_role "admin"
   def index

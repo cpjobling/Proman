@@ -1,3 +1,5 @@
+<% content_for(:left_sidebar) do %>
+<h2>Please login</h2>
 <% form_tag session_path do -%>
 <p><label for="login">Login</label><br/>
 <%= text_field_tag 'login' %></p>
@@ -8,5 +10,8 @@
 <p><label for="remember_me">Remember me:</label>
 <%= check_box_tag 'remember_me' %></p>
 
+<p><%= link_to("Register", signup_path) %>
+
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
+<% end %>

@@ -1,4 +1,6 @@
-<h1>You have been logged out!</h1>
-
+<% content_for(:left_sidebar) do %>
+	
+<p><strong>You have been logged out!</strong></p>
 
   <p>Back to <%= link_to 'Home', :controller => 'sessions', :action => 'start' %></p>
+<% end %>

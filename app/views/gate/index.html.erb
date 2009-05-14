@@ -1,7 +1,26 @@
 <% content_for :left_sidebar do %>
-<h2><%= "Hello, " + User.find(session[:user_id]).login %></h2>
+
+<% if logged_in? %>
+  <p><strong>You are logged in as <%=h current_user.login %></strong></p>
+  <p><%= link_to 'Logout', logout_path %></p>
+<% else %>
+  <p><strong>You are currently not logged in.</strong></p>
+  <p>
+    <%= link_to 'Login', login_path %> or
+    <%= link_to 'Sign Up', signup_path %>
+  </p>
 <% end %>
 
+<% end %>
+
+<h2>Hello, 
+	<% if current_user.staff_or_student == "staff" %>
+	  <%= current_user.title %> <%= user.last_name %>
+	<% else %>
+	  <%= current_user.first_name %>
+	<% end %>
+</h2>
+	
 <% if @roles.include?('admin') %>
 
     <p><%= link_to 'View/Edit Users', :controller => 'gate', :action => 'list' %></p>
@@ -28,6 +47,5 @@
 <% end %>
 
 <% if @roles.empty? %>
-	<h2>Welcome to Proman</h2>
-	<p>Your account is being validated. Check back later.</p>
+	<p>Your account is being validated. Please check back later.</p>
 <% end %>
