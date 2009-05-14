@@ -1,0 +1,508 @@
+/*
+	University of Wales Swansea Intranet
+	Steve Owen
+*/
+
+
+/*-------------------------*/
+/* HTML TAG RE-DEFINITIONS */
+/*-------------------------*/
+body {
+	color: #003366; 
+	background: #ffffff;
+	font-family: Arial, Helvetica, Sans-Serif; 
+	font-size: 10pt;
+	font-weight: normal;
+	margin: 20px; 
+	padding: 20px;
+}
+
+HR {	
+	color:#000000;
+	border-bottom:0px;
+/*	border-top: 1px solid black;*/
+	border-top: 1px dotted #003366;
+	height:1px;
+}
+
+TABLE, TR, TD {
+	border-style: none;
+}
+
+INPUT, TEXTAREA, SELECT {
+	color: #003366; 
+	font-size: 10pt; 
+	font-family: Arial, Helvetica, Sans-Serif; 
+	border-color: #c0c0c0; 
+	border-style: solid; 
+	border-width: 1px;
+}
+INPUT.mandatory, TEXTAREA.mandatory, SELECT.mandatory {
+	border-color: #ff7c7c;
+}
+
+INPUT.noborder {
+	border-width: 0px; 
+	border: none;
+}
+
+A {
+	font-weight: normal; 
+	font-size: 10pt; 
+	text-decoration: none;
+}
+
+A:link {
+	color: #003366; 
+}
+
+A:visited {
+	color: #993366; 
+}
+
+A:hover {
+	color: #cc0000; 
+	text-decoration: underline overline;
+}
+
+A.navbar {
+	text-decoration: none;
+	color: #ffffff; 
+	font-family: arial; 
+	font-size: 8pt; 
+	font-weight: normal; 
+}
+
+A:visited.navbar {
+	color: #ffffff; 
+}
+
+A:hover.navbar {
+	text-decoration: none;
+	color: #ffffff; 
+	font-weight: bold; 
+}
+
+A:link.header {
+	color: #003366; 
+	font-family: arial; 
+	font-weight: bold; 
+	font-size: 12pt; 
+	text-decoration: none;
+}
+
+A:visited.header {
+	color: #003366; 
+	font-family: arial; 
+	font-weight: bold; 
+	font-size: 12pt; 
+	text-decoration: none;
+}
+
+A:hover.header {
+	color: #cc0000; 
+	font-family: arial; 
+	font-weight: bold; 
+	font-size: 12pt; 
+	text-decoration: underline overline;
+}
+/* sgo 17.5.06
+A.footer {
+	text-decoration: none;
+	color: #003366; 
+	font-weight: normal; 
+	font-size: 8pt; 
+	font-family: arial; 
+}
+
+A:visited.footer {
+	color: #003366; 
+}
+
+A:hover.footer {
+	text-decoration: none;
+	color: #003366; 
+	font-weight: bold; 
+}
+*/
+A.para {
+	text-decoration: underline;
+	color: #003366; 
+	font-weight: normal; 
+	font-size: 10pt; 
+}
+
+A:visited.para {
+	color: #993366; 
+}
+
+A:hover.para {
+	text-decoration: underline overline;
+	color: #cc0000; 
+	font-weight: normal; 
+}
+
+A.info {
+	text-decoration: underline;
+	color: #003366; 
+	font-weight: normal; 
+	font-size: 8pt; 
+}
+
+A:visited.info {
+	color: #993366; 
+}
+
+A:hover.info {
+	text-decoration: underline overline;
+	color: #cc0000; 
+	font-weight: normal; 
+}
+
+A.warnpara {
+	text-decoration: none;
+	color: #cc0000; 
+	font-weight: normal; 
+	font-size: 10pt; 
+}
+
+A:visited.warnpara {
+	color: #cc0000; 
+}
+
+A:hover.warnpara {
+	text-decoration: underline overline;
+	color: #cc0000; 
+	font-weight: bold; 
+}
+
+A.warninfo {
+	text-decoration: none;
+	color: #cc0000; 
+	font-weight: normal; 
+	font-size: 8pt; 
+}
+
+A:visited.warninfo {
+	color: #cc0000; 
+}
+
+A:hover.warninfo {
+	text-decoration: underline overline;
+	color: #cc0000; 
+	font-weight: bold; 
+}
+
+
+/*--------------------*/
+/* CUSTOM CSS CLASSES */
+/*--------------------*/
+h1 {
+	color: #003366; 
+	font-size: 36pt;
+}
+
+h2 {
+	color: #003366; 
+	font-size: 12pt;
+}
+
+h2.bold {
+	color: #003366; 
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+p {
+	color: #003366; 
+	font-size: 10pt;
+}
+
+p.info {
+	color: #003366; 
+	font-size: 8pt;
+}
+
+p.error {
+	color: #cc0000; 
+	font-size: 16pt;
+}
+
+h1.warnhead {
+	color: #cc0000; 
+	font-size: 12pt;
+}
+
+.warnpara {
+	color: #cc0000; 
+	font-size: 10pt;
+}
+
+.warninfo {
+	color: #cc0000; 
+	font-size: 8pt;
+}
+
+.section {
+	color: #000000; 
+ 	background-image: url(/images/bannerbg.gif);
+	font-weight: bold; 
+	font-size: 14pt; 
+}
+
+.sectionrv {
+	color: #ffffff; 
+	background-image: url(/images/navbarbg.gif); 
+	font-weight: bold; 
+	font-size: 12pt;
+}
+
+#siteheader {
+	margin: 0 0 5px 0; 
+	padding: 0; 
+	height: 30px; 
+	background-color:#0068C6;
+	/*background: url(/images/su_header.png) repeat-x white; */
+/*border: dotted 1px red;*/
+}
+
+#banner {
+	margin: 0; 
+	padding: 0 20px 0 0; 
+	text-align: right;
+	color: white; 
+	float:right;
+	font-size: 140%;
+
+	position:relative;
+	top:-26px;
+}
+#bannertext, #UWS_BannerText {
+	color: white;
+	padding: 2px 20px;
+	
+/*
+	position: relative;
+	top: 55px;
+	background-color: white;
+	filter:alpha(opacity=70);
+	opacity: 0.7;
+	-moz-opacity:0.7;
+*/
+}
+
+#banner-left
+{
+	margin:0;
+	background-color:White;
+	height:30px;
+}
+#banner-right
+{
+	margin:0;
+	background-color:#0068C6;
+	height:30px;
+}
+#banner-middle
+{
+	background-image:url(/images/header_bg_fade.gif);
+	width:780px;
+	height:30px;
+}
+
+#footerbackground
+{
+	height: 115px;
+	width:100%;
+	background: url(/images/su_header.png) repeat-x white;
+}
+
+
+/* sgo 17.5.06
+.bannertxt {
+	color: #003366; 
+	font-size: 18pt; 
+	font-weight: bold;
+}
+
+.bannerbg {
+	background-image: url(/images/template/logo_bg.gif);
+}
+
+.navbarbg {
+	background-image: url(/images/template/2nd_row_stretch.gif);
+}
+*/
+
+#pageoptions {
+	/*border-bottom: dotted 1px #0068c6;*/
+	width: 98%;
+	margin:auto;
+	/*margin-bottom:5px;*/
+}
+#pageoptions ul {
+/*border: dotted 1px red;*/
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 20px;
+}
+#pageoptions ul li {
+	float:left;
+	display:block;
+	width: 9.6%;
+	margin: 0 0.2%;
+}
+#pageoptions ul li a {
+	display: block;
+	color: #0068c6;
+	text-decoration: none;
+	width: 98%;
+	padding: 1%;
+	text-align: center;
+	font-size: 85%;
+	border: dotted 1px #0068c6;
+}
+#pageoptions ul li a:visited {
+	color: #0068c6;
+}
+
+#pageoptions ul li a:hover {
+	color: #0068c6;
+	font-weight: bold;
+}
+
+#pageoptionsdate {
+	clear:both;
+	text-align: right;
+	width: 100%;
+	color: #0068c6;
+	font-size: 85%;
+	margin: 0 0 10px 0;
+}
+
+#pageoptionsdate a {
+	color: #0068c6;
+	font-size: 95%;
+}
+
+#footertable {
+	color: #0068c6 ! important; 
+	background-image: none ! important; 
+	border-bottom: dotted 1px #0068c6 ! important;
+}
+#footertable td.info {
+	color: #0068c6 ! important; 
+}
+
+#footertable a {
+	text-decoration: none;
+	color: #0068c6; 
+	font-weight: normal; 
+	font-size: 8pt; 
+	font-family: arial; 
+}
+
+#footertable a:visited {
+	text-decoration: none;
+	color: #0068c6; 
+}
+
+#footertable a:hover {
+	text-decoration: none;
+	color: #0068c6; 
+	font-weight: bold; 
+}
+
+.lightbg {
+	background-color: #dcfafa;
+}
+
+.mediumbg {
+	background-color: #afe3fa;
+}
+
+.darkbg {
+	background-color: #14c8dc;
+}
+
+.grey {
+	background-color: #c0c0c0;
+}
+
+.yellowbg {
+	background-color: #ffffd1;
+}
+
+.box {
+	border-width: 1px; 
+/*	border-style: solid; 
+	border-color: #668888;*/
+	border-style: dotted;
+	border-color: #0068C6;
+}
+
+.boxtitle {
+	color: #ffffff; 
+	font-size: 11pt; 
+	font-weight: bold; 
+	text-align: center; 
+	/*background-image: url(/images/template/2nd_row_stretch.gif);*/
+	background-color:#0068C6;
+}
+
+
+.borders {
+	border-width: 1px; 
+	border-style: solid; 
+	border-color: #000000;
+}
+
+#submit, .submit {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+
+.tooltip {
+	border: 1px dotted black;
+	margin: 0px;
+	padding: 2px;
+	color: black;
+	background-color: #f5f6be;
+	font-size: 8pt;
+	text-align: left;
+}
+
+.xmlError{
+	margin:10px;
+	border: 1px dotted red;
+	color:red;
+	font-size: 10pt;
+}
+
+.readonly
+{	
+	background: white url(/images/padlock.gif) no-repeat center right;
+	padding-right:20px;
+}
+
+.required
+{	
+	background: white url(/images/asterisk.gif) no-repeat center right;
+	padding-right:20px;
+}
+
+input[disabled]
+{
+    background-color : White;
+    color:gray;
+}
+
+.draggable {
+	border-bottom: 10px ridge rgb(192,192,192);
+}
+
+
+
