@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  require_role "Admin", :for => :edit 
+  require_role ["admin","coordinator","student","staff"], :for => :edit 
 
-  # render new.rhtml
+  # render new.html.erb
   def new
   end
 
@@ -30,6 +30,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @roles = {}
     Role.find(:all).collect {|r| @roles[r.name] = r.id }
+    # edit only if administrator, or owner...
+    unless (is_owner? or is_administrator?)
+    	flash[:notice] = "You must be either logged in as #{@user.login} or an administrator to edit this user record."
+    	redirect_to :action =>'show', id=>@user
+    end
  end
   
   def update
@@ -55,6 +60,14 @@ class UsersController < ApplicationController
         @user.roles << roles
       end
 
+    end
+    
+    def is_owner?
+    	return (session[:user_id] == @user)
+    end
+    
+    def is_administrator?(user)
+    	return #
     end
 
 end

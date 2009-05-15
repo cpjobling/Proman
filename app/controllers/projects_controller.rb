@@ -1,7 +1,11 @@
 class ProjectsController < ApplicationController
 
  
- # require_role "admin"
+ require_role "admin", :for => "allocate"
+ require_role ["admin", "coordinator", "staff"], 
+    :for => ["new", "create", "edit", "update"]
+ require_role ["staff", "student"], :for => "my_projects"
+     
   def index
     @projects = Project.find(:all)
   end
@@ -113,15 +117,15 @@ class ProjectsController < ApplicationController
   	@projects = Project.find(:all)
   end
   
-#    private
-#    def handle_disciplines_projects
-#      if params['discipline_ids']
-#        @project.disciplines.clear
-#        disciplines = params['discipline_ids'].map { |id| Discipline.find(id) }
-#       @project.disciplines << disciplines
-#      end
-#
-#    end
+    private
+    def handle_disciplines_projects
+      if params['discipline_ids']
+        @project.disciplines.clear
+        disciplines = params['discipline_ids'].map { |id| Discipline.find(id) }
+       @project.disciplines << disciplines
+      end
+
+    end
     
     
 
