@@ -1,6 +1,6 @@
 <h1>Edit: <%=h @project.title %></h1>
 
-<p> <%= link_to "View all", {:action => 'order_by_creator'} %> | <%= link_to "View by discipline", {:action => 'order_by_disciplines'} %></p>
+<p> <%= link_to "View all", {:action => 'by_supervisor'} %> | <%= link_to "View by discipline", {:action => 'by_discipline'} %></p>
   
 <%form_for :project, :url => {:action=>'update', :id => @project.id} do |f|%>
 	
