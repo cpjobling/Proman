@@ -7,8 +7,10 @@ module ActiveRecord
         else
           @target = (AssociationProxy === record ? record.target : record)
 
-          @owner[@reflection.primary_key_name] = record.id
-          @owner[@reflection.options[:foreign_type]] = record.class.base_class.name.to_s
+          unless record.new_record?
+            @owner[@reflection.primary_key_name] = record.id
+            @owner[@reflection.options[:foreign_type]] = record.class.base_class.name.to_s
+          end
 
           @updated = true
         end
@@ -27,13 +29,12 @@ module ActiveRecord
 
           if @reflection.options[:conditions]
             association_class.find(
-              @owner[@reflection.primary_key_name],
-              :select     => @reflection.options[:select],
+              @owner[@reflection.primary_key_name], 
               :conditions => conditions,
               :include    => @reflection.options[:include]
             )
           else
-            association_class.find(@owner[@reflection.primary_key_name], :select => @reflection.options[:select], :include => @reflection.options[:include])
+            association_class.find(@owner[@reflection.primary_key_name], :include => @reflection.options[:include])
           end
         end
 

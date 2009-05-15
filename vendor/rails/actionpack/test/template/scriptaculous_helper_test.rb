@@ -1,8 +1,16 @@
-require 'abstract_unit'
+require "#{File.dirname(__FILE__)}/../abstract_unit"
 
-class ScriptaculousHelperTest < ActionView::TestCase
-  tests ActionView::Helpers::ScriptaculousHelper
-
+class ScriptaculousHelperTest < Test::Unit::TestCase
+  include ActionView::Helpers::JavaScriptHelper
+  include ActionView::Helpers::PrototypeHelper
+  include ActionView::Helpers::ScriptaculousHelper
+  
+  include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::FormHelper
+  include ActionView::Helpers::CaptureHelper
+  
   def setup
     @controller = Class.new do
       def url_for(options)
@@ -80,10 +88,8 @@ class ScriptaculousHelperTest < ActionView::TestCase
       drop_receiving_element("droptarget1", :accept => 'products', :update => 'infobox')
     assert_dom_equal %(<script type=\"text/javascript\">\n//<![CDATA[\nDroppables.add(\"droptarget1\", {accept:['tshirts','mugs'], onDrop:function(element){new Ajax.Updater('infobox', 'http://www.example.com/', {asynchronous:true, evalScripts:true, parameters:'id=' + encodeURIComponent(element.id)})}})\n//]]>\n</script>),
       drop_receiving_element("droptarget1", :accept => ['tshirts','mugs'], :update => 'infobox')
-    assert_dom_equal %(<script type=\"text/javascript\">\n//<![CDATA[\nDroppables.add("droptarget1", {hoverclass:'dropready', onDrop:function(element){if (confirm('Are you sure?')) { new Ajax.Request('http://www.example.com/update_drop', {asynchronous:true, evalScripts:true, parameters:'id=' + encodeURIComponent(element.id)}); }}})\n//]]>\n</script>),
-    drop_receiving_element('droptarget1', :hoverclass=>'dropready', :url=>{:action=>'update_drop'}, :confirm => 'Are you sure?')
-
   end
+
   def protect_against_forgery?
     false
   end

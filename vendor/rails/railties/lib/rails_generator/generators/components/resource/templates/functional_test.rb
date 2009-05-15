@@ -1,8 +1,8 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../test_helper'
 
 class <%= controller_class_name %>ControllerTest < ActionController::TestCase
   # Replace this with your real tests.
-  test "the truth" do
+  def test_truth
     assert true
   end
 end

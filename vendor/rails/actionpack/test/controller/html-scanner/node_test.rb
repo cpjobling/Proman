@@ -1,4 +1,5 @@
-require 'abstract_unit'
+require File.dirname(__FILE__) + '/../../abstract_unit'
+require 'test/unit'
 
 class NodeTest < Test::Unit::TestCase
   
@@ -64,26 +65,5 @@ class NodeTest < Test::Unit::TestCase
     node = nil
     assert_nothing_raised { node = HTML::Node.parse(nil,0,0,s,false) }
     assert node.attributes.has_key?("onmouseover")
-  end
-
-  def test_parse_with_valid_cdata_section
-    s = "<![CDATA[<span>contents</span>]]>"
-    node = nil
-    assert_nothing_raised { node = HTML::Node.parse(nil,0,0,s,false) }
-    assert_kind_of HTML::CDATA, node
-    assert_equal '<span>contents</span>', node.content
-  end
-
-  def test_parse_strict_with_unterminated_cdata_section
-    s = "<![CDATA[neverending..."
-    assert_raise(RuntimeError) { HTML::Node.parse(nil,0,0,s) }
-  end
-
-  def test_parse_relaxed_with_unterminated_cdata_section
-    s = "<![CDATA[neverending..."
-    node = nil
-    assert_nothing_raised { node = HTML::Node.parse(nil,0,0,s,false) }
-    assert_kind_of HTML::CDATA, node
-    assert_equal 'neverending...', node.content
   end
 end

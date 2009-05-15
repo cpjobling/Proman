@@ -1,5 +1,3 @@
-require 'active_support/json'
-
 module ActiveRecord #:nodoc:
   module Serialization
     class Serializer #:nodoc:
@@ -10,11 +8,11 @@ module ActiveRecord #:nodoc:
       end
 
       # To replicate the behavior in ActiveRecord#attributes,
-      # <tt>:except</tt> takes precedence over <tt>:only</tt>.  If <tt>:only</tt> is not set
+      # :except takes precedence over :only.  If :only is not set
       # for a N level model but is set for the N+1 level models,
-      # then because <tt>:except</tt> is set to a default value, the second
-      # level model can have both <tt>:except</tt> and <tt>:only</tt> set.  So if
-      # <tt>:only</tt> is set, always delete <tt>:except</tt>.
+      # then because :except is set to a default value, the second
+      # level model can have both :except and :only set.  So if
+      # :only is set, always delete :except.
       def serializable_attribute_names
         attribute_names = @record.attribute_names
 
@@ -40,7 +38,7 @@ module ActiveRecord #:nodoc:
         serializable_attribute_names + serializable_method_names
       end
 
-      # Add associations specified via the <tt>:includes</tt> option.
+      # Add associations specified via the :includes option.
       # Expects a block that takes as arguments:
       #   +association+ - name of the association
       #   +records+     - the association record(s) to be serialized

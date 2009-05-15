@@ -1,3 +1,2 @@
-require "#{RAILS_ROOT}/config/environment"
-require 'rails/info'
+require 'environment'
 puts Rails::Info

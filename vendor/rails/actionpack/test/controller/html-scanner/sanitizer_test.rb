@@ -1,6 +1,7 @@
-require 'abstract_unit'
+require File.dirname(__FILE__) + '/../../abstract_unit'
+require 'test/unit'
 
-class SanitizerTest < ActionController::TestCase
+class SanitizerTest < Test::Unit::TestCase
   def setup
     @sanitizer = nil # used by assert_sanitizer
   end
@@ -17,8 +18,6 @@ class SanitizerTest < ActionController::TestCase
     %{This is a test.\n\n\nIt no longer contains any HTML.\n}, sanitizer.sanitize(
     %{<title>This is <b>a <a href="" target="_blank">test</a></b>.</title>\n\n<!-- it has a comment -->\n\n<p>It no <b>longer <strong>contains <em>any <strike>HTML</strike></em>.</strong></b></p>\n}))
     assert_equal "This has a  here.", sanitizer.sanitize("This has a <!-- comment --> here.")
-    assert_equal "This has a  here.", sanitizer.sanitize("This has a <![CDATA[<section>]]> here.")
-    assert_equal "This has an unclosed ", sanitizer.sanitize("This has an unclosed <![CDATA[<section>]] here...")
     [nil, '', '   '].each { |blank| assert_equal blank, sanitizer.sanitize(blank) }
   end
 
@@ -204,12 +203,6 @@ class SanitizerTest < ActionController::TestCase
     assert_equal expected, sanitize_css(raw)
   end
 
-  def test_should_sanitize_with_trailing_space
-    raw = "display:block; "
-    expected = "display: block;"
-    assert_equal expected, sanitize_css(raw)
-  end
-
   def test_should_sanitize_xul_style_attributes
     raw = %(-moz-binding:url('http://ha.ckers.org/xssmoz.xml#xss'))
     assert_equal '', sanitize_css(raw)
@@ -242,31 +235,15 @@ class SanitizerTest < ActionController::TestCase
   end
 
   def test_should_sanitize_img_vbscript
-    assert_sanitized %(<img src='vbscript:msgbox("XSS")' />), '<img />'
-  end
-
-  def test_should_sanitize_cdata_section
-    assert_sanitized "<![CDATA[<span>section</span>]]>", "&lt;![CDATA[&lt;span>section&lt;/span>]]>"
-  end
-
-  def test_should_sanitize_unterminated_cdata_section
-    assert_sanitized "<![CDATA[<span>neverending...", "&lt;![CDATA[&lt;span>neverending...]]>"
-  end
-
-  def test_should_not_mangle_urls_with_ampersand
-     assert_sanitized %{<a href=\"http://www.domain.com?var1=1&amp;var2=2\">my link</a>}
+     assert_sanitized %(<img src='vbscript:msgbox("XSS")' />), '<img />'
   end
 
 protected
   def assert_sanitized(input, expected = nil)
     @sanitizer ||= HTML::WhiteListSanitizer.new
-    if input
-      assert_dom_equal expected || input, @sanitizer.sanitize(input)
-    else
-      assert_nil @sanitizer.sanitize(input)
-    end
+    assert_equal expected || input, @sanitizer.sanitize(input)
   end
-
+  
   def sanitize_css(input)
     (@sanitizer ||= HTML::WhiteListSanitizer.new).sanitize_css(input)
   end

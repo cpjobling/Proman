@@ -3,116 +3,193 @@ module ActionController
   # reloading the app after each request when Dependencies.load? is true.
   class Dispatcher
     class << self
-      def define_dispatcher_callbacks(cache_classes)
-        unless cache_classes
-          unless self.middleware.include?(Reloader)
-            self.middleware.insert_after(Failsafe, Reloader)
-          end
-
-          ActionView::Helpers::AssetTagHelper.cache_asset_timestamps = false
-        end
-
-        if defined?(ActiveRecord)
-          to_prepare(:activerecord_instantiate_observers) { ActiveRecord::Base.instantiate_observers }
-        end
-
-        after_dispatch :flush_logger if Base.logger && Base.logger.respond_to?(:flush)
-
-        to_prepare do
-          I18n.reload!
-        end
-      end
-
-      # DEPRECATE: Remove CGI support
+      # Backward-compatible class method takes CGI-specific args. Deprecated
+      # in favor of Dispatcher.new(output, request, response).dispatch.
       def dispatch(cgi = nil, session_options = CgiRequest::DEFAULT_SESSION_OPTIONS, output = $stdout)
         new(output).dispatch_cgi(cgi, session_options)
+      end
+
+      # Declare a block to be called before each dispatch.
+      # Run in the order declared.
+      def before_dispatch(*method_names, &block)
+        callbacks[:before].concat method_names
+        callbacks[:before] << block if block_given?
+      end
+
+      # Declare a block to be called after each dispatch.
+      # Run in reverse of the order declared.
+      def after_dispatch(*method_names, &block)
+        callbacks[:after].concat method_names
+        callbacks[:after] << block if block_given?
       end
 
       # Add a preparation callback. Preparation callbacks are run before every
       # request in development mode, and before the first request in production
       # mode.
-      #
+      # 
       # An optional identifier may be supplied for the callback. If provided,
       # to_prepare may be called again with the same identifier to replace the
       # existing callback. Passing an identifier is a suggested practice if the
       # code adding a preparation block may be reloaded.
       def to_prepare(identifier = nil, &block)
-        @prepare_dispatch_callbacks ||= ActiveSupport::Callbacks::CallbackChain.new
-        callback = ActiveSupport::Callbacks::Callback.new(:prepare_dispatch, block, :identifier => identifier)
-        @prepare_dispatch_callbacks.replace_or_append!(callback)
+        # Already registered: update the existing callback
+        if identifier
+          if callback = callbacks[:prepare].assoc(identifier)
+            callback[1] = block
+          else
+            callbacks[:prepare] << [identifier, block]
+          end
+        else
+          callbacks[:prepare] << block
+        end
       end
 
-      def run_prepare_callbacks
-        if defined?(Rails) && Rails.logger
-          logger = Rails.logger
-        else
-          logger = Logger.new($stderr)
+      # If the block raises, send status code as a last-ditch response.
+      def failsafe_response(fallback_output, status, originating_exception = nil)
+        yield
+      rescue Exception => exception
+        begin
+          log_failsafe_exception(status, originating_exception || exception)
+          body = failsafe_response_body(status)
+          fallback_output.write "Status: #{status}\r\nContent-Type: text/html\r\n\r\n#{body}"
+          nil
+        rescue Exception => failsafe_error # Logger or IO errors
+          $stderr.puts "Error during failsafe response: #{failsafe_error}"
+          $stderr.puts "(originally #{originating_exception})" if originating_exception
+        end
+      end
+
+      private
+        def failsafe_response_body(status)
+          error_path = "#{error_file_path}/#{status.to_s[0..3]}.html"
+
+          if File.exist?(error_path)
+            File.read(error_path)
+          else
+            "<html><body><h1>#{status}</h1></body></html>"
+          end
         end
 
-        new(logger).send :run_callbacks, :prepare_dispatch
+        def log_failsafe_exception(status, exception)
+          message = "/!\\ FAILSAFE /!\\  #{Time.now}\n  Status: #{status}\n"
+          message << "  #{exception}\n    #{exception.backtrace.join("\n    ")}" if exception
+          failsafe_logger.fatal message
+        end
+
+        def failsafe_logger
+          if defined?(::RAILS_DEFAULT_LOGGER) && !::RAILS_DEFAULT_LOGGER.nil?
+            ::RAILS_DEFAULT_LOGGER
+          else
+            Logger.new($stderr)
+          end
+        end
+    end
+
+    cattr_accessor :error_file_path
+    self.error_file_path = "#{::RAILS_ROOT}/public" if defined? ::RAILS_ROOT
+
+    cattr_accessor :callbacks
+    self.callbacks = Hash.new { |h, k| h[k] = [] }
+
+    cattr_accessor :unprepared
+    self.unprepared = true
+
+
+    before_dispatch :reload_application
+    before_dispatch :prepare_application
+    after_dispatch :flush_logger
+    after_dispatch :cleanup_application
+
+    if defined? ActiveRecord
+      to_prepare :activerecord_instantiate_observers do
+        ActiveRecord::Base.instantiate_observers
       end
+    end
 
-      def reload_application
-        # Run prepare callbacks before every request in development mode
-        run_prepare_callbacks
+    def initialize(output, request = nil, response = nil)
+      @output, @request, @response = output, request, response
+    end
 
+    def dispatch
+      run_callbacks :before
+      handle_request
+    rescue Exception => exception
+      failsafe_rescue exception
+    ensure
+      run_callbacks :after, :reverse_each
+    end
+
+    def dispatch_cgi(cgi, session_options)
+      if cgi ||= self.class.failsafe_response(@output, '400 Bad Request') { CGI.new }
+        @request = CgiRequest.new(cgi, session_options)
+        @response = CgiResponse.new(cgi)
+        dispatch
+      end
+    rescue Exception => exception
+      failsafe_rescue exception
+    end
+
+    def reload_application
+      if Dependencies.load?
         Routing::Routes.reload
+        self.unprepared = true
+      end
+    end
+
+    def prepare_application(force = false)
+      begin
+        require_dependency 'application' unless defined?(::ApplicationController)
+      rescue LoadError => error
+        raise unless error.message =~ /application\.rb/
       end
 
-      def cleanup_application
-        # Cleanup the application before processing the current request.
+      ActiveRecord::Base.verify_active_connections! if defined?(ActiveRecord)
+
+      if unprepared || force
+        run_callbacks :prepare
+        self.unprepared = false
+      end
+    end
+
+    # Cleanup the application by clearing out loaded classes so they can
+    # be reloaded on the next request without restarting the server.
+    def cleanup_application(force = false)
+      if Dependencies.load? || force
         ActiveRecord::Base.reset_subclasses if defined?(ActiveRecord)
-        ActiveSupport::Dependencies.clear
+        Dependencies.clear
         ActiveRecord::Base.clear_reloadable_connections! if defined?(ActiveRecord)
       end
     end
 
-    cattr_accessor :middleware
-    self.middleware = MiddlewareStack.new do |middleware|
-      middlewares = File.join(File.dirname(__FILE__), "middlewares.rb")
-      middleware.instance_eval(File.read(middlewares))
-    end
-
-    include ActiveSupport::Callbacks
-    define_callbacks :prepare_dispatch, :before_dispatch, :after_dispatch
-
-    # DEPRECATE: Remove arguments, since they are only used by CGI
-    def initialize(output = $stdout, request = nil, response = nil)
-      @output = output
-      @app = @@middleware.build(lambda { |env| self.dup._call(env) })
-    end
-
-    def dispatch
-      begin
-        run_callbacks :before_dispatch
-        Routing::Routes.call(@env)
-      rescue Exception => exception
-        if controller ||= (::ApplicationController rescue Base)
-          controller.call_with_exception(@env, exception).to_a
-        else
-          raise exception
-        end
-      ensure
-        run_callbacks :after_dispatch, :enumerator => :reverse_each
-      end
-    end
-
-    # DEPRECATE: Remove CGI support
-    def dispatch_cgi(cgi, session_options)
-      CGIHandler.dispatch_cgi(self, cgi, @output)
-    end
-
-    def call(env)
-      @app.call(env)
-    end
-
-    def _call(env)
-      @env = env
-      dispatch
-    end
-
     def flush_logger
-      Base.logger.flush
+      RAILS_DEFAULT_LOGGER.flush if defined?(RAILS_DEFAULT_LOGGER) && RAILS_DEFAULT_LOGGER.respond_to?(:flush)
     end
+
+    protected
+      def handle_request
+        @controller = Routing::Routes.recognize(@request)
+        @controller.process(@request, @response).out(@output)
+      end
+
+      def run_callbacks(kind, enumerator = :each)
+        callbacks[kind].send!(enumerator) do |callback|
+          case callback
+          when Proc; callback.call(self)
+          when String, Symbol; send!(callback)
+          when Array; callback[1].call(self)
+          else raise ArgumentError, "Unrecognized callback #{callback.inspect}"
+          end
+        end
+      end
+
+      def failsafe_rescue(exception)
+        self.class.failsafe_response(@output, '500 Internal Server Error', exception) do
+          if @controller ||= defined?(::ApplicationController) ? ::ApplicationController : Base
+            @controller.process_with_exception(@request, @response, exception).out(@output)
+          else
+            raise exception
+          end
+        end
+      end
   end
 end

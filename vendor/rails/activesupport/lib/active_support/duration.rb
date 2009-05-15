@@ -1,5 +1,3 @@
-require 'active_support/basic_object'
-
 module ActiveSupport
   # Provides accurate date and time measurements using Date#advance and 
   # Time#advance, respectively. It mainly supports the methods on Numeric,
@@ -53,14 +51,14 @@ module ActiveSupport
 
     # Calculates a new Time or Date that is as far in the future
     # as this Duration represents.
-    def since(time = ::Time.current)
+    def since(time = ::Time.now)
       sum(1, time)
     end
     alias :from_now :since
 
     # Calculates a new Time or Date that is as far in the past
     # as this Duration represents.
-    def ago(time = ::Time.current)
+    def ago(time = ::Time.now)
       sum(-1, time)
     end
     alias :until :ago
@@ -70,12 +68,12 @@ module ActiveSupport
       [:years, :months, :days, :minutes, :seconds].map do |length|
         n = consolidated[length]
         "#{n} #{n == 1 ? length.to_s.singularize : length.to_s}" if n.nonzero?
-      end.compact.to_sentence(:locale => :en)
+      end.compact.to_sentence
     end
 
     protected
 
-      def sum(sign, time = ::Time.current) #:nodoc:
+      def sum(sign, time = ::Time.now) #:nodoc:
         parts.inject(time) do |t,(type,number)|
           if t.acts_like?(:time) || t.acts_like?(:date)
             if type == :seconds
@@ -84,7 +82,7 @@ module ActiveSupport
               t.advance(type => sign * number)
             end
           else
-            raise ::ArgumentError, "expected a time or date, got #{time.inspect}"
+            raise ArgumentError, "expected a time or date, got #{time.inspect}"
           end
         end
       end

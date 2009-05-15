@@ -1,4 +1,5 @@
-require 'abstract_unit'
+require File.dirname(__FILE__) + '/../../abstract_unit'
+require 'test/unit'
 
 class TokenizerTest < Test::Unit::TestCase
 
@@ -75,13 +76,6 @@ class TokenizerTest < Test::Unit::TestCase
   def test_cdata_tag
     tokenize %{<![CDATA[<br>]]>}
     assert_next %{<![CDATA[<br>]]>}
-    assert_end
-  end
-
-  def test_unterminated_cdata_tag
-    tokenize %{<content:encoded><![CDATA[ neverending...}
-    assert_next %{<content:encoded>}
-    assert_next %{<![CDATA[ neverending...}
     assert_end
   end
 

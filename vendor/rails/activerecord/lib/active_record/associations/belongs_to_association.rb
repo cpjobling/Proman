@@ -2,18 +2,18 @@ module ActiveRecord
   module Associations
     class BelongsToAssociation < AssociationProxy #:nodoc:
       def create(attributes = {})
-        replace(@reflection.create_association(attributes))
+        replace(@reflection.klass.create(attributes))
       end
 
       def build(attributes = {})
-        replace(@reflection.build_association(attributes))
+        replace(@reflection.klass.new(attributes))
       end
 
       def replace(record)
         counter_cache_name = @reflection.counter_cache_column
 
         if record.nil?
-          if counter_cache_name && !@owner.new_record?
+          if counter_cache_name && @owner[counter_cache_name] && !@owner.new_record?
             @reflection.klass.decrement_counter(counter_cache_name, @owner[@reflection.primary_key_name]) if @owner[@reflection.primary_key_name]
           end
 
@@ -42,11 +42,9 @@ module ActiveRecord
       private
         def find_target
           @reflection.klass.find(
-            @owner[@reflection.primary_key_name],
-            :select     => @reflection.options[:select],
+            @owner[@reflection.primary_key_name], 
             :conditions => conditions,
-            :include    => @reflection.options[:include],
-            :readonly   => @reflection.options[:readonly]
+            :include    => @reflection.options[:include]
           )
         end
 

@@ -1,12 +1,13 @@
 module ActionView
   module TemplateHandlers
     class RJS < TemplateHandler
-      include Compilable
+      def self.line_offset
+        2
+      end
 
       def compile(template)
-        "@template_format = :html;" +
-        "controller.response.content_type ||= Mime::JS;" +
-          "update_page do |page|;#{template.source}\nend"
+        "controller.response.content_type ||= Mime::JS\n" +
+        "update_page do |page|\n#{template}\nend"
       end
     end
   end

@@ -1,27 +1,14 @@
-require 'rubygems'
 require 'test/unit'
 
-gem 'mocha', '>= 0.9.5'
-require 'mocha'
-
 $:.unshift "#{File.dirname(__FILE__)}/../lib"
-$:.unshift "#{File.dirname(__FILE__)}/../../activesupport/lib"
-$:.unshift "#{File.dirname(__FILE__)}/../../actionpack/lib"
 require 'action_mailer'
 require 'action_mailer/test_case'
 
 # Show backtraces for deprecated behavior for quicker cleanup.
 ActiveSupport::Deprecation.debug = true
 
-# Bogus template processors
-ActionView::Template.register_template_handler :haml, lambda { |template| "Look its HAML!".inspect }
-ActionView::Template.register_template_handler :bak, lambda { |template| "Lame backup".inspect }
-
 $:.unshift "#{File.dirname(__FILE__)}/fixtures/helpers"
-
-ActionView::Base.cache_template_loading = true
-FIXTURE_LOAD_PATH = File.join(File.dirname(__FILE__), 'fixtures')
-ActionMailer::Base.template_root = FIXTURE_LOAD_PATH
+ActionMailer::Base.template_root = "#{File.dirname(__FILE__)}/fixtures"
 
 class MockSMTP
   def self.deliveries
@@ -35,24 +22,21 @@ class MockSMTP
   def sendmail(mail, from, to)
     @@deliveries << [mail, from, to]
   end
-
-  def start(*args)
-    yield self
-  end
 end
 
 class Net::SMTP
-  def self.new(*args)
-    MockSMTP.new
+  def self.start(*args)
+    yield MockSMTP.new
   end
 end
 
-def uses_gem(gem_name, test_name, version = '> 0')
-  gem gem_name.to_s, version
-  require gem_name.to_s
+# Wrap tests that use Mocha and skip if unavailable.
+def uses_mocha(test_name)
+  gem 'mocha', ">=0.5"
+  require 'stubba'
   yield
-rescue LoadError
-  $stderr.puts "Skipping #{test_name} tests. `gem install #{gem_name}` and try again."
+rescue Gem::LoadError
+  $stderr.puts "Skipping #{test_name} tests (Mocha >= 0.5 is required). `gem install mocha` and try again."
 end
 
 def set_delivery_method(delivery_method)
