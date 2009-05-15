@@ -1,4 +1,4 @@
-class ProjectController < ApplicationController
+class ProjectsController < ApplicationController
 
  
  # require_role "admin"
@@ -90,28 +90,38 @@ class ProjectController < ApplicationController
 
   end
 
-  def projects_by_staff
-    @projects = Project.find_by_sql "SELECT * FROM projects WHERE created_by = #{session[:user_id]}"
-    #@projects = Project.find(:all)
+  def my_projects
+  	# Need to have different results for staff and students
+    if ! session[:user_id]
+    	flash[:notice] = "You need to be logged in to see your own projects!"
+    	redirect_to :action => "index"
+    else 
+    	@projects = Project.find(:all, 
+       :conditions => ["created_by = ?", session[:user_id]])
+    end
   end
 
-  def order_by_creator
+  def by_supervisor
     @projects = Project.find_by_sql "SELECT p.title, p.id, u.last_name FROM `projects` AS p, users AS u WHERE p.created_by = u.id ORDER BY u.last_name ASC"
   end
   
-    def order_by_disciplines
-    @disciplines_proj = DisciplinesProject.find(:all, :order =>'discipline_id')
+  def by_discipline
+    @disciplines_projects = DisciplinesProjects.find(:all, :order =>'discipline_id')
   end
   
-    private
-    def handle_disciplines_projects
-      if params['discipline_ids']
-        @project.disciplines.clear
-        disciplines = params['discipline_ids'].map { |id| Discipline.find(id) }
-        @project.disciplines << disciplines
-      end
-
-    end
+  def by_centre
+  	@projects = Project.find(:all)
+  end
+  
+#    private
+#    def handle_disciplines_projects
+#      if params['discipline_ids']
+#        @project.disciplines.clear
+#        disciplines = params['discipline_ids'].map { |id| Discipline.find(id) }
+#       @project.disciplines << disciplines
+#      end
+#
+#    end
     
     
 

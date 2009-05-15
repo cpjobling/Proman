@@ -1,0 +1,15 @@
+<p><h1><%= "" + User.find(session[:user_id]).first_name + " " + User.find(session[:user_id]).last_name + "'s projects:" %> </h1></p>
+<p>
+<% if @projects.blank? %>
+    <p>no projects to display</p>
+<%else%>
+  <ul id="projects">
+    <% @projects.each do |is| %>
+      <li>
+        <%= link_to is.title,
+          {:action => 'show', :id => is.id} -%>
+      </li>
+      <%end%>
+  </ul>
+<%end%>
+<p><%= link_to "New Project", {:action => 'new'} %></p>

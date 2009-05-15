@@ -1,3 +1,5 @@
+@import url("scaffold.css");
+
 /* Based on the Perfect 3 Column Liquid Layout by Matthew James Taylor.
    http://matthewjamestaylor.com/blog/perfect-multi-column-liquid-layouts
 */
@@ -157,5 +159,3 @@ img {
 	padding:10px;
 	margin:0;
 }
-/* --> */
-</style>

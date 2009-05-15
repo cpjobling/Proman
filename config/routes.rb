@@ -4,11 +4,35 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
 
   map.resource :session
+  
+  map.connect 'projects/by_supervisor', 
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_supervisor"
+    
+  map.connect 'projects/by_discipline', 
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_discipline"
+    
+  map.connect 'projects/by_centre', 
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_centre"
+    
+  map.connect 'my_projects', 
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "my_projects"
+    
+  map.resources :projects
+  
+
 
   
-map.signup '/signup', :controller => 'users', :action => 'new'
-map.login '/login', :controller => 'sessions', :action => 'new'
-map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.login '/login', :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -41,6 +65,6 @@ map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end

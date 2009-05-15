@@ -1,15 +1,15 @@
 <h1>Projects Ordered by Disciplines</h1>
 
-<p> <%= link_to "View all", {:action => 'index'} %> | <%= link_to "View by discipline", {:action => 'order_by_supervisor'} %></p>
+<p> <%= link_to "View all", {:action => 'index'} %> | <%= link_to "View by discipline", {:action => 'by_supervisor'} %></p>
 <%
  curr_disc = '';
 %>
 <p>
-<% if @disciplines_proj.blank? %>
-    <p>no projects to display</p>
+<% if @disciplines_projects.blank? %>
+    <p>No projects to display</p>
 <%else%>
   <ul id="projects">
-    <% @disciplines_proj.each do |is| %>
+    <% @disciplines_projects.each do |is| %>
  <%
           if curr_disc == ''
             curr_disc = Discipline.find(is.discipline_id).name
@@ -26,12 +26,12 @@
           end
         %>
       <li>
-  <%= link_to  Project.find(is.project_id).title, {:action => 'show', :id => is.id} -%>
+  <%= link_to  Project.find(is.project_id).title, project_url( :id => is.project_id) -%>
       <%end%>
   </ul>
 <%end%>
 
-<p>To veiw projects sorted by creator <%= link_to "Click Here", {:action => 'order_by_creator'} %></p>
+<p>To view projects sorted by supervisor that created them <%= link_to "Click Here", {:action => 'by_supervisor'} %></p>
 <p><%= link_to 'Back', {:action => 'index'} %></p>
 
 
