@@ -23,25 +23,26 @@
 	
 <% if @roles.include?('admin') %>
 
-    <p><%= link_to 'View/Edit Users', :controller => 'gate', :action => 'list' %></p>
+    <p><%= link_to 'View/Edit Users', :controller => 'gate', :action => 'index' %></p>
     <p><%= link_to 'Add Students', :controller => 'students', :action => 'new' %></p>
-    <p><%= link_to 'View/Edit Students', :controller => 'students', :action => 'list' %></p>
-    <p><%= link_to 'View/Edit Projects', :controller => 'project', :action => 'index' %></p>
-    <p><%= link_to 'Allocate Projects', :controller => 'project', :action => 'allocate' %></p>
+    <p><%= link_to 'View/Edit Students', :controller => 'students', :action => 'index' %></p>
+    <p><%= link_to 'View/Edit Projects', :controller => 'projects', :action => 'index' %></p>
+    <p><%= link_to 'Allocate Projects', :controller => 'projects', :action => 'allocate' %></p>
 
 <% end %>
 
 <% if @roles.include?('student') %>
 
   <p>Student</p>
-  <p><%= link_to 'Project List', :controller => 'project', :action => 'index' %></p>
+  <p><%= link_to 'My Projects', :controller => 'projects', :action => 'my_projects' %></p>
+  <p><%= link_to 'Project List', :controller => 'projects', :action => 'index' %></p>
   <p><%= link_to 'Selection', :controller => 'students', :action => 'choose_projects' %></p>
   
 <% end %>
 
 <% if @roles.include?('staff') %>
 
-    <p><%= link_to 'View/Edit my projects', :controller => 'project', :action => 'projects_by_staff' %></p>
+    <p><%= link_to 'View/Edit my projects', :controller => 'project', :action => 'my_projects' %></p>
     <p><%= link_to 'Create New Project', :controller => 'project', :action => 'new' %></p>
 
 <% end %>

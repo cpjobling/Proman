@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Logged in successfully"
       redirect_to :controller => "gate", :action => "index"
     else
+      flash[:notice] = "Sorry!"
       render :action => 'new'
     end
   end
@@ -30,6 +31,6 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_to :controller => "sessions", :action => "logout"
+    redirect_to :controller => "sessions", :action => "destroy"
   end
 end

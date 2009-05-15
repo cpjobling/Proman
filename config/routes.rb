@@ -25,14 +25,21 @@ ActionController::Routing::Routes.draw do |map|
     :controller => "projects",
     :action => "my_projects"
     
+  map.connect 'allocate',
+    :conditions => { :method => :put },
+    :controller => "projects",
+    :action => "allocate"
+    
   map.resources :projects
   
 
-
+  map.resources :students
   
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  
+  map.gate '/gate', :controller => 'gate', :action => 'index'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
