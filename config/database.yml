@@ -36,7 +36,7 @@ test:
 production:
   adapter: mysql
   encoding: utf8
-  database: proman_production
-  username: root
-  password: 
+  database: proman
+  username: proman111
+  password: eg-353-projects
   host: localhost
