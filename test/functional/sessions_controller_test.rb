@@ -1,65 +1,77 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 require 'sessions_controller'
 
 # Re-raise errors caught by the controller.
 class SessionsController; def rescue_action(e) raise e end; end
 
-class SessionsControllerTest < Test::Unit::TestCase
-  # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead
-  # Then, you can remove it from this and the units test.
-  include AuthenticatedTestHelper
+class SessionsControllerTest < ActionController::TestCase
 
   fixtures :users
 
-  def setup
-    @controller = SessionsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
-  def test_should_login_and_redirect
+  test "should login and redirect" do
     post :create, :login => '111111', :password => 'test'
-    assert session[:user_id]
     assert_response :redirect
+    assert_redirected_to :controller => "gate", :action => "index"
+  end
+  
+  test "successful login should set session[:user_id]" do
+    post :create, :login => '111111', :password => 'test'
+    assert session[:user_id]    
   end
 
-  def test_should_fail_login_and_not_redirect
+   test "should confirm successful login" do
+    post :create, :login => '111111', :password => 'test'
+    assert_equal "Logged in successfully", flash[:notice]
+  end
+  
+  test "should fail login and not redirect" do
     post :create, :login => '111111', :password => 'bad password'
     assert_nil session[:user_id]
     assert_response :success
+    assert_template "new"
   end
 
-  def test_should_logout
+  test "should fail login and not set session[:user_id]" do
+    post :create, :login => '111111', :password => 'bad password'
+    assert_nil session[:user_id]
+  end
+  
+  test "should tell us that we have a bad login-pasword combination" do
+    post :create, :login => '111111', :password => 'bad password'
+    assert_equal "Invalid login or password", flash[:notice]
+  end
+  
+  test "should logout" do
     login_as :student
     get :destroy
     assert_nil session[:user_id]
     assert_response :redirect
   end
 
-  def test_should_remember_me
+  test "should remember me" do
     post :create, :login => '111111', :password => 'test', :remember_me => "1"
     assert_not_nil @response.cookies["auth_token"]
   end
 
-  def test_should_not_remember_me
+  test "should not remember me" do
     post :create, :login => '111111', :password => 'test', :remember_me => "0"
     assert_nil @response.cookies["auth_token"]
   end
   
-  def test_should_delete_token_on_logout
+  test "should delete token on logout" do
     login_as :student
     get :destroy
-    assert_equal @response.cookies["auth_token"], []
+    assert_nil @response.cookies["auth_token"]
   end
 
-  def test_should_login_with_cookie
+  test "should login with cookie" do
     users(:student).remember_me
     @request.cookies["auth_token"] = cookie_for(:student)
     get :new
     assert @controller.send(:logged_in?)
   end
 
-  def test_should_fail_expired_cookie_login
+  test "should fail expired cookie login" do
     users(:student).remember_me
     users(:student).update_attribute :remember_token_expires_at, 5.minutes.ago
     @request.cookies["auth_token"] = cookie_for(:student)
@@ -67,7 +79,7 @@ class SessionsControllerTest < Test::Unit::TestCase
     assert !@controller.send(:logged_in?)
   end
 
-  def test_should_fail_cookie_login
+  test "should fail cookie login" do
     users(:student).remember_me
     @request.cookies["auth_token"] = auth_token('invalid_auth_token')
     get :new

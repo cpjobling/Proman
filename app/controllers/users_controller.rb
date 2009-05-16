@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  require_role ["admin","coordinator","student","staff"], :for => :edit 
+  require_role ["admin","coordinator","student","staff"], 
+     :for => ["edit", "update"] 
 
   # render new.html.erb
   def new
@@ -59,7 +60,6 @@ class UsersController < ApplicationController
         roles = params['role_ids'].map { |id| Role.find(id) }
         @user.roles << roles
       end
-
     end
     
     def is_owner?

@@ -20,8 +20,8 @@
 <div id="header">
 	<h1><span class="logo">Proman<sup>&beta;</sup></span> </h1>
 	<h2><%= @title %></h2>
-    <%= render(:partial => "shared/tabs") %>
-	<%= render(:partial => "shared/navigation") %>
+    <%= render :partial => "shared/tabs" %>
+	<%= render :partial => "shared/navigation" %>
 </div>
 <div class="colmask threecol">
 	<div class="colmid">
@@ -38,7 +38,7 @@
 			</div>
 			<div class="col3">
 				<!-- Column 3 start -->
-				<%= render_partial "shared/activities" %>
+				<%= render :partial => "shared/activities" %>
 				<%= yield :right_sidebar %>
 				<!-- Column 3 end -->
 			</div>

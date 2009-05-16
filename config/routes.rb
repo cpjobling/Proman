@@ -1,9 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :news_articles
+
   
   map.root :controller => "sessions", :action => 'start'
   map.resources :users
 
-  map.resource :session
   
   map.connect 'projects/by_supervisor', 
     :conditions => { :method => :get },
@@ -72,6 +73,6 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
-  #map.connect ':controller/:action/:id'
-  #map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id.:format'
 end

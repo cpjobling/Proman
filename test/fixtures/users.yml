@@ -66,3 +66,13 @@ cpj:
     last_name: Jobling
     staff_or_student_number: 039934
     created_at: <%= 100.days.ago.to_s :db %>
+    
+new_user:
+    login: nobody
+    email: nobody@nowhere.com 
+    salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+    crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+    staff_or_student_number: 007 
+    title: Mr
+    first_name: No
+    last_name: Body

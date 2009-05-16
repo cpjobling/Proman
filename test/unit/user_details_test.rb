@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UserDetailsTest < Test::Unit::TestCase
+class UserDetailsTest < ActiveSupport::TestCase
   # Tests the basic function of the user classes ...
   # see user_test.rb for tests of restful authentication functionality
   fixtures :users, :roles

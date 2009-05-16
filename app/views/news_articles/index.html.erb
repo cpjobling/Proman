@@ -1,0 +1,24 @@
+<h1>Listing news_articles</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Summary</th>
+    <th>Content</th>
+  </tr>
+
+<% for news_article in @news_articles %>
+  <tr>
+    <td><%=h news_article.title %></td>
+    <td><%=h news_article.summary %></td>
+    <td><%=h news_article.content %></td>
+    <td><%= link_to 'Show', news_article %></td>
+    <td><%= link_to 'Edit', edit_news_article_path(news_article) %></td>
+    <td><%= link_to 'Destroy', news_article, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New news_article', new_news_article_path %>

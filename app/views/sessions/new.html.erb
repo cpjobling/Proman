@@ -1,7 +1,9 @@
 <% content_for(:left_sidebar) do %>
 <h2>Please login</h2>
-<% form_tag session_path do -%>
-<
+<% form_tag login_path do -%>
+<% if flash[:notice] %>
+  <div class="notice"><%= flash[:notice] %></div>
+<% end %>
 <p><label for="login">Login</label><br/>
 <%= text_field_tag 'login' %></p>
 

@@ -2,7 +2,10 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
+  # AuthenticatedTestHelper helps to test authentication
+  include AuthenticatedTestHelper
+   
   # RoleRequirementTestHelper must be included to test RoleRequirement
   include RoleRequirementTestHelper
 
@@ -22,7 +25,7 @@ class Test::Unit::TestCase
   # The only drawback to using transactional fixtures is when you actually 
   # need to test transactions.  Since your test is bracketed by a transaction,
   # any transactions started in your code will be automatically rolled back.
-  self.use_transactional_fixtures = true
+  #self.use_transactional_fixtures = true
 
   # Instantiated fixtures are slow, but give you @david where otherwise you
   # would need people(:david).  If you don't want to migrate your existing
