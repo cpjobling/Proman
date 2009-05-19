@@ -1,4 +1,5 @@
 class NewsArticlesController < ApplicationController
+  
   # GET /news_articles
   # GET /news_articles.xml
   def index

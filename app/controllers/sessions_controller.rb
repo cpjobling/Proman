@@ -1,7 +1,8 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
 
-
+  skip_before_filter :login_required, :except => :destroy # turn off most login checks in this controller
+  
   # render new.rhtml
   def new
   end
@@ -16,11 +17,10 @@ class SessionsController < ApplicationController
         	:expires => self.current_user.remember_token_expires_at 
     	}
       end
-      #redirect_back_or_default('/')
-      flash[:notice] = "Logged in successfully"
-      redirect_to :controller => "gate", :action => "index"
+      flash[:login_message] = "Logged in successfully"
+      redirect_back_or_default('/')
     else
-      flash[:notice] = "Invalid login or password"
+      flash[:login_message] = "Invalid login or password"
       render :action => 'new'
     end
   end

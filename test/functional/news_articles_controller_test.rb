@@ -2,6 +2,16 @@ require 'test_helper'
 require 'news_articles_controller'
 
 class NewsArticlesControllerTest < ActionController::TestCase
+
+  fixtures :news_articles, :users, :roles, :user_roles
+
+  def setup
+    @controller = ProjectsController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    login_as :admin # should be able to do everything for now
+  end
+  
   test "should get index" do
     get :index
     assert_response :success

@@ -4,7 +4,7 @@ extend MigrationHelpers
   def self.up
     create_table "users", :force => true do |t|
       t.string :login
-      t.string :title, :limit => 10
+      t.string :title, :limit => ["Dr", "Prof.", "Mr", "Mrs", "Ms"]
       t.string :first_name
       t.string :last_name
       t.string :email

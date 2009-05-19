@@ -8,5 +8,7 @@ db/*.sqlite3
 .project
 .loadpath
 nbproject
+routes.txt
+
 
 
