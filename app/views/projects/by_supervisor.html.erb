@@ -1,5 +1,11 @@
+<<<<<<< HEAD:app/views/projects/by_supervisor.html.erb
 <h1>Projects ordered by Supervisor</h1>
 <p> <%= link_to "View all", {:action => 'index'} %> | <%= link_to "View by discipline", {:action => 'by_discipline'} %></p>
+=======
+<% title "Projects by Supervisor" %>
+<p><%= render(:partial => "navigation") %></p>
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/by_supervisor.html.erb
 <%
  curr_staff = '';
 %>
@@ -13,12 +19,20 @@
           if curr_staff == ''
             curr_staff = is.last_name
         %>
+<<<<<<< HEAD:app/views/projects/by_supervisor.html.erb
       <p><u><%= 'Projects by ' + is.last_name %><br></u></p>        
+=======
+      <p><u><%= 'Projects by ' + is.last_name %><br></u></p>
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/by_supervisor.html.erb
         <%
           else
             if curr_staff != is.last_name
         %>
+<<<<<<< HEAD:app/views/projects/by_supervisor.html.erb
         <p><u><%= 'Projects by ' + is.last_name %><br></u></p> 
+=======
+        <p><u><%= 'Projects by ' + is.last_name %><br></u></p>
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/by_supervisor.html.erb
         <%
               curr_staff = is.last_name
             end
@@ -31,4 +45,8 @@
       </li>
       <%end%>
   </ul>
+<<<<<<< HEAD:app/views/projects/by_supervisor.html.erb
 <%end%>
+=======
+<%end%>
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/by_supervisor.html.erb

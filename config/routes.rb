@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+<<<<<<< HEAD:config/routes.rb
   map.resources :news_articles
 
   
@@ -45,6 +46,40 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'session', :action => 'destroy'
   
   map.gate '/gate', :controller => 'gate', :action => 'index'
+=======
+
+ 
+
+  map.connect 'projects/by_supervisor',
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_supervisor"
+
+  map.connect 'projects/by_discipline',
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_discipline"
+
+  map.connect 'projects/by_centre',
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "by_centre"
+
+  map.connect 'my_projects',
+    :conditions => { :method => :get },
+    :controller => "projects",
+    :action => "my_projects"
+
+  map.resources :projects
+
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.login '/login', :controller => 'sessions', :action => 'new'
+  map.register '/register', :controller => 'users', :action => 'create'
+  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.resources :users
+
+  map.resource :session
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:config/routes.rb
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -64,6 +99,15 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+<<<<<<< HEAD:config/routes.rb
+=======
+  
+  # Sample resource route with more complex sub-resources
+  #   map.resources :products do |products|
+  #     products.resources :comments
+  #     products.resources :sales, :collection => { :recent => :get }
+  #   end
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:config/routes.rb
 
   # Sample resource route within a namespace:
   #   map.namespace :admin do |admin|
@@ -72,11 +116,20 @@ ActionController::Routing::Routes.draw do |map|
   #   end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
+<<<<<<< HEAD:config/routes.rb
   # map.root :controller => "welcome"
+=======
+  map.root :controller => "welcome"
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:config/routes.rb
 
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
+<<<<<<< HEAD:config/routes.rb
+=======
+  # Note: These default routes make all actions in every controller accessible via GET requests. You should
+  # consider removing the them or commenting them out if you're using named routes and resources.
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:config/routes.rb
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
   # require_role "admin"
 
@@ -13,16 +14,35 @@ class ProjectsController < ApplicationController
   def index
     @projects = Project.find(:all)
     
+=======
+
+  skip_before_filter :login_required, :only => ["index","by_discipline","by_centre","by_supervisor"]
+  require_role ["admin", "coordinator", "staff"], :for => ["new", "create", "edit", "update", "destroy"]
+  before_filter :can_edit, :only => ["create", "edit", "update", "destroy"]
+
+  helper_method :can_edit
+
+  # GET /projects
+  # GET /projects.xml
+  def index
+    @projects = Project.all
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @projects }
     end
   end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   # GET /projects/1
   # GET /projects/1.xml
   def show
     @project = Project.find(params[:id])
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     @disciplines = collect_disciplines
     
     respond_to do |format|
@@ -59,11 +79,39 @@ class ProjectsController < ApplicationController
   
   
   
+=======
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @project }
+    end
+  end
+
+  # GET /projects/new
+  # GET /projects/new.xml
+  def new
+    @project = Project.new
+    @project.disciplines = []
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @project }
+    end
+  end
+
+  # GET /projects/1/edit
+  def edit
+      @project = Project.find(params[:id])
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   # POST /projects
   # POST /projects.xml
   def create
     @project = Project.new(params[:project])
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     handle_disciplines_projects
+=======
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
 
     respond_to do |format|
       if @project.save
@@ -76,13 +124,21 @@ class ProjectsController < ApplicationController
       end
     end
   end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   # PUT /projects/1
   # PUT /projects/1.xml
   def update
     @project = Project.find(params[:id])
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     handle_disciplines_projects
     
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = 'Project was successfully updated.'
@@ -94,19 +150,33 @@ class ProjectsController < ApplicationController
       end
     end
   end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   # DELETE /projects/1
   # DELETE /projects/1.xml
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
     respond_to do |format|
       format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
     end
   end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
+=======
+
+  # Non standard methods
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   def allocate
     @projects = Project.find_by_sql "SELECT * FROM projects WHERE id NOT IN (SELECT project_id FROM students WHERE project_id IS NOT NULL)"
     @students = Student.find_by_sql "SELECT * FROM students WHERE project_id IS NULL OR project_id = 0 ORDER BY grade DESC"
@@ -117,7 +187,11 @@ class ProjectsController < ApplicationController
       @applied = Student.find_by_sql "SELECT p.title, p.id AS project_id, sp.wish, CONCAT(s.first_name, ' ', s.last_name) AS fname, s.id AS student_id FROM projects AS p, users AS s, wishes AS sp WHERE  sp.project_id = p.id AND sp.student_id = s.id AND sp.student_id=#{s.id} ORDER BY sp.wish ASC"
       assigned = false
       @applied.each do |app|
+<<<<<<< HEAD:app/controllers/projects_controller.rb
         if !@assigned.include?(app.project_id) && !assigned          
+=======
+        if !@assigned.include?(app.project_id) && !assigned
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
           @assigned.push(app.project_id)
           @ass_students.push(app.student_id)
           assigned = true
@@ -138,10 +212,17 @@ class ProjectsController < ApplicationController
       @student.save!
       i += 1
     end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     
     cs = Student.find_by_sql "SELECT MAX( tour ) AS mt FROM `students`WHERE project_id IS NOT NULL OR project_id != 0"
     @last_tour = cs[0].mt
     
+=======
+
+    cs = Student.find_by_sql "SELECT MAX( tour ) AS mt FROM `students`WHERE project_id IS NOT NULL OR project_id != 0"
+    @last_tour = cs[0].mt
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
     @nass_students.each do |nas|
       @student = Student.find(nas)
       s = {}
@@ -150,15 +231,23 @@ class ProjectsController < ApplicationController
       @student.attributes = s[:student]
       @student.save!
     end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     
     
   end
   
+=======
+
+
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   def my_projects
     # Need to have different results for staff and students
     if ! session[:user_id]
       flash[:notice] = "You need to be logged in to see your own projects!"
       redirect_to :action => "index"
+<<<<<<< HEAD:app/controllers/projects_controller.rb
     else 
       @projects = Project.find(:all, 
                                :conditions => ["created_by = ?", session[:user_id]])
@@ -178,6 +267,42 @@ class ProjectsController < ApplicationController
   end
   
   private
+=======
+    else
+      @projects = Project.find(:all,
+        :conditions => ["created_by = ?", session[:user_id]])
+    end
+  end
+
+  def by_supervisor
+    @projects = Project.find_by_sql "SELECT p.title, p.id, u.last_name FROM `projects` AS p, users AS u WHERE p.created_by = u.id ORDER BY u.last_name ASC"
+  end
+
+  def by_discipline
+    @disciplines_projects = DisciplinesProjects.find(:all, :order =>'discipline_id')
+  end
+
+  def by_centre
+    @projects = Project.find(:all)
+  end
+
+  protected
+  
+  def can_edit
+    # TODO write and test this method!
+    # current user can edit this resource if:
+    #   * he/she has the admin role, or
+    #   * he/she has the coordinator role, or
+    #   * he/she created the resource
+    unless true
+      flash[:error] = 'You are not authorized to alter this project'
+      redirect_to back_or_default('/')
+    end
+  end
+    
+  private
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
   def handle_disciplines_projects
     if params['discipline_ids']
       @project.disciplines.clear
@@ -185,10 +310,19 @@ class ProjectsController < ApplicationController
       @project.disciplines << disciplines
     end
   end
+<<<<<<< HEAD:app/controllers/projects_controller.rb
   
   def collect_disciplines   
+=======
+
+  def collect_disciplines
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
     @disciplines = {}
     Discipline.find(:all).collect {|r| @disciplines[r.long_name] = r.id }
   end
 
+<<<<<<< HEAD:app/controllers/projects_controller.rb
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/controllers/projects_controller.rb
 end

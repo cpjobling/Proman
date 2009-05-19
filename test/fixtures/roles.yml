@@ -1,3 +1,4 @@
+<<<<<<< HEAD:test/fixtures/roles.yml
 admin_role:
   id: 1
   name: admin
@@ -10,3 +11,17 @@ student_role:
 coordinator_role:
   id: 4
   name: coordinator
+=======
+admin_role:
+  id: 1
+  name: admin
+staff_role:
+  id: 2
+  name: staff
+student_role:
+  id: 3
+  name: student
+coordinator_role:
+  id: 4
+  name: coordinator
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/fixtures/roles.yml

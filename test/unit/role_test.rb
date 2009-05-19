@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
+<<<<<<< HEAD:test/unit/role_test.rb
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/role_test.rb
 class RoleTest < ActiveSupport::TestCase
   
   # Replace this with your real tests.

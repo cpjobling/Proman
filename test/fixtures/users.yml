@@ -1,3 +1,4 @@
+<<<<<<< HEAD:test/fixtures/users.yml
 # An admin, student, coordinator and real member of staff
 
 admin:
@@ -76,3 +77,136 @@ new_user:
     title: Mr
     first_name: No
     last_name: Body
+=======
+# For authenticated tests....
+quentin:
+  id:                        1
+  login:                     quentin
+  email:                     quentin@example.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
+  title: Mr
+  first_name: Quentin
+  last_name: Crisp
+  known_as: Q
+
+
+aaron:
+  id:                        2
+  login:                     aaron
+  email:                     aaron@example.com
+  salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
+  crypted_password:          0b40c01d35664eaec45e2a11a8fe2b137327dcc2 # 'monkey'
+  created_at:                <%= 1.days.ago.to_s :db %>
+  remember_token_expires_at: 
+  remember_token:            
+  title: Mr
+  first_name: Aaron
+  last_name: Evans
+
+
+old_password_holder:
+  id:                        3
+  login:                     old_password_holder
+  email:                     salty_dog@example.com
+  salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at:                <%= 1.days.ago.to_s :db %>
+  title: Dame
+  first_name: Diana
+  last_name: Rigg
+  known_as: Emma Peel
+
+
+# Real users for everything else
+# An admin, student, coordinator and real member of staff
+
+admin:
+    id: 10
+    login: admin
+    email: eee.webmaster@swansea.ac.uk
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    # activation_code: adminscode # only if you're activating new signups
+    created_at: <%= 1.days.ago.to_s :db %>
+    title: Mr
+    first_name: Proman
+    last_name: Administrator
+    known_as: Boss
+
+    
+# A dummy student
+student:
+    id: 12
+    login: 111111
+    email: 111111@swansea.ac.uk
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    created_at: <%= 5.days.ago.to_s :db %>
+    title: Mr
+    first_name: Nicolay
+    last_name: Parashkevenov
+    known_as: Poker face
+
+
+# A dummy staff member
+academic:
+    id: 13
+    login: a.n.academic
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    email: a.n.academic@swansea.ac.uk
+    created_at: <%= 5.days.ago.to_s :db %>
+    title: Dr
+    first_name: Atomic
+    initials: B.
+    last_name: Omb
+    known_as: Kaboom
+
+
+
+# A dummy coordinator
+coordinator:
+    id: 14
+    login: a.coordinator
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    email: a.coordinator@swansea.ac.uk
+    created_at: <%= 5.days.ago.to_s :db %>
+    title: Prof
+    first_name: C.
+    initials: O
+    last_name: O'dinated
+    known_as: Ready 4 N.E. Thing
+
+
+# A real staff member (Dr Jobling is Module Coordinator)!
+# Obviously this is not the password that is in production!
+cpj:
+    id: 15
+    login: c.p.jobling
+    email: c.p.jobling@swansea.ac.uk
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    created_at: <%= 100.days.ago.to_s :db %>
+    title: Dr
+    first_name: Christopher
+    initials: P.
+    last_name: Jobling
+    known_as: Chris
+
+
+new_user:
+    login: nobody
+    email: nobody@nowhere.com 
+    salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+    crypted_password:          63d8fefa835d181f7c2705227e0452045141b380 # 'monkey'
+    title: Ms
+    first_name: Anne
+    initials: O.
+    last_name: Minus
+    known_as: Nobody
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/fixtures/users.yml

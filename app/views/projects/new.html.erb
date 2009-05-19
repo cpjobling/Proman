@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/projects/new.html.erb
 <h1>Create new project</h1>
 <%= print session %>
 <% form_for :project, :url => {:action=>'create'} do |f|%>
@@ -12,3 +13,20 @@
   <%= f.submit "Create" %>
 <%end%>
   <p><%= link_to 'Back', {:action => 'index'} %></p>
+=======
+
+<% title "New project" %>
+
+<% form_for(@project) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :created_by, { :value => session[:user_id] } %>
+  
+  <%= render :partial => "project", :object => @project, :locals => { :f => f } %>
+
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', projects_path %>
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/new.html.erb

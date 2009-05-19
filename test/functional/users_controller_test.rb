@@ -5,6 +5,7 @@ require 'users_controller'
 class UsersController; def rescue_action(e) raise e end; end
 
 class UsersControllerTest < ActionController::TestCase
+<<<<<<< HEAD:test/functional/users_controller_test.rb
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead
   # Then, you can remove it from this and the units test.
   include AuthenticatedTestHelper
@@ -16,6 +17,10 @@ class UsersControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
+=======
+
+  fixtures :users
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/functional/users_controller_test.rb
 
   def test_should_allow_signup
     assert_difference 'User.count' do
@@ -55,6 +60,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
   end
+<<<<<<< HEAD:test/functional/users_controller_test.rb
 
   def test_should_require_first_name_on_signup
     assert_no_difference 'User.count' do
@@ -91,5 +97,15 @@ class UsersControllerTest < ActionController::TestCase
         :first_name => 'Herman', 
         :last_name => 'Munster',
         :staff_or_student_number => '999999'}.merge(options)
+=======
+  
+
+  
+
+  protected
+    def create_user(options = {})
+      post :create, :user => { :login => 'quire', :email => 'quire@example.com',
+        :password => 'quire69', :password_confirmation => 'quire69' }.merge(options)
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/functional/users_controller_test.rb
     end
 end

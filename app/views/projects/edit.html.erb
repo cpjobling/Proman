@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/projects/edit.html.erb
 <h1>Edit: <%=h @project.title %></h1>
 
 <p> <%= link_to "View all", {:action => 'by_supervisor'} %> | <%= link_to "View by discipline", {:action => 'by_discipline'} %></p>
@@ -10,3 +11,20 @@
 <% end %>
 
 <p><%= link_to 'Back', {:action => 'index'} %></p>
+=======
+<% title "Editing project" %>
+
+<% form_for(@project) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :created_by %>
+
+  <%= render :partial => "project", :object => @project, :locals => { :f => f } %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @project %> |
+<%= link_to 'Back', projects_path %>
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:app/views/projects/edit.html.erb

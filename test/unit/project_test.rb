@@ -1,3 +1,4 @@
+<<<<<<< HEAD:test/unit/project_test.rb
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ProjectTest < ActiveSupport::TestCase
@@ -10,11 +11,30 @@ class ProjectTest < ActiveSupport::TestCase
     @icct = disciplines(:icct)	
   end
   
+=======
+
+require 'test_helper'
+
+class ProjectTest < ActiveSupport::TestCase
+
+  fixtures :users, :projects
+
+  def setup
+    @project = projects(:project1)
+    @disciplines = Discipline.find(:all)
+    @icct = disciplines(:icct)
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   # Replace this with your real tests.
   def test_truth
     assert true
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   # Test validation rules
   def test_invalid_with_empty_atributes
   	project = Project.new
@@ -23,20 +43,33 @@ class ProjectTest < ActiveSupport::TestCase
   	assert project.errors.invalid?(:description)
   	assert project.errors.invalid?(:created_by)
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_unique_title
   	project = Project.new(:title => projects(:project1).title,
   		:description => "A dummy project",
   		:created_by => users(:academic).id)
+<<<<<<< HEAD:test/unit/project_test.rb
   		
   	assert !project.save
   	assert_equal "has already been taken", project.errors.on(:title)
   end
   
+=======
+
+  	assert !project.save
+  	assert_equal "has already been taken", project.errors.on(:title)
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_project_creator_is_valid
       users = User.find(:all)
       users.each do |user|
       	if user.has_role?('staff')
+<<<<<<< HEAD:test/unit/project_test.rb
 			projects = Project.find(:all, 
 			   :conditions => ["created_by = ?", user.id])
 			projects.each do |project|
@@ -55,22 +88,91 @@ class ProjectTest < ActiveSupport::TestCase
   		"project by should now be carbon critical"
   end
   
+=======
+			projects = Project.find(:all,
+			   :conditions => ["created_by = ?", user.id])
+			projects.each do |project|
+				assert_equal project.created_by, user.id,
+				   "user #{user.id} didn't create project #{project.id}"
+			end
+      	end
+  	  end
+  end
+
+  def test_project_can_be_carbon_critical
+  	assert !@project.carbon_critical,
+  		"project by default should not be carbon critical"
+  	@project.carbon_critical = true
+  	assert @project.carbon_critical,
+  		"project by should now be carbon critical"
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_project_not_assigned_to_discipline
   	@disciplines.each do |discipline|
   		assert !@project.suitable_for?(discipline.name)
   	end
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
   def test_project_assigned_to_discipline
+=======
+
+  test "we can add a discipline by name" do
+    discipline = @icct
+    assert ! @project.suitable_for?(@icct.name), "Before: should be not suitable for @icct.name"
+    @project.suitable_for(discipline.name)
+    assert @project.suitable_for?(@icct.name), "After should now be suitable for @icct.name"
+  end
+
+  test "we can add a discipline by id" do
+    discipline = @icct
+    assert ! @project.suitable_for?(@icct.id), "Before: should be not suitable for @icct.id"
+    @project.suitable_for(discipline.id)
+    assert @project.suitable_for?(@icct.id), "After should now be suitable for @icct.id"
+  end
+
+  test "we can add a discipline by object" do
+    discipline = @icct
+    assert ! @project.suitable_for?(@icct), "Before: should be not suitable for @icct"
+    @project.suitable_for(discipline)
+    assert @project.suitable_for?(@icct), "After should now be suitable for @icct"
+  end
+
+  test "test that we can recognize a discipline by name" do
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   	discipline = @icct
   	@project.disciplines << discipline
   	assert @project.suitable_for?(discipline.name)
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+  test "test that we can recognize a discipline by object" do
+    discipline = @icct
+    @project.disciplines << discipline
+    assert @project.suitable_for?(discipline)
+  end
+
+  test "test that we can recognize a discipline by object id" do
+    discipline = @icct
+    @project.disciplines << discipline
+    assert @project.suitable_for?(discipline.id)
+  end
+
+  test "test that we can't recognize a discipline by arbitrary type" do
+    discipline = @icct
+    @project.disciplines << discipline
+    assert ! @project.suitable_for?(users(:admin))
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_project_suitable_for_all
   	@disciplines.each do |discipline|
   		@project.disciplines << discipline
   	end
+<<<<<<< HEAD:test/unit/project_test.rb
     assert @project.suitable_for_all?, 
        "Project should suit all disciplines"
   end
@@ -86,10 +188,28 @@ class ProjectTest < ActiveSupport::TestCase
        "Project assigned to one discipline should not suit all disciplines"
   end
   
+=======
+    assert @project.suitable_for_all?,
+       "Project should suit all disciplines"
+  end
+
+  def test_unnassigned_project_not_suitable_for_all
+    assert ! @project.suitable_for_all?,
+       "Unaasigned project should not suit all disciplines"
+  end
+
+  def test_singly_assigned_project_not_suitable_for_all
+  	@project.disciplines << @icct
+    assert ! @project.suitable_for_all?,
+       "Project assigned to one discipline should not suit all disciplines"
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_project_assigned_to_all_but_one_discipline_not_suitable_for_all
   	@disciplines.each do |discipline|
   		@project.disciplines << discipline
   	end
+<<<<<<< HEAD:test/unit/project_test.rb
   	
   	# Remove last discipline
   	@project.disciplines.delete(disciplines(:sport))
@@ -97,6 +217,15 @@ class ProjectTest < ActiveSupport::TestCase
        "Project assigned to all but one discipline should not suit all disciplines"
   end
   
+=======
+
+  	# Remove last discipline
+  	@project.disciplines.delete(disciplines(:sport))
+    assert ! @project.suitable_for_all?,
+       "Project assigned to all but one discipline should not suit all disciplines"
+  end
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_suitable_for_any
   	assert ! @project.suitable_for_any?, "Project should not be suitable for any"
   	@project.disciplines << @icct
@@ -104,20 +233,32 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   def test_suitable_for_discipline
+<<<<<<< HEAD:test/unit/project_test.rb
   	assert ! @project.suitable_for_any?, 
+=======
+  	assert ! @project.suitable_for_any?,
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   	    "Project should not be suitable for any discipine"
   	discipline = @icct
   	@project.suitable_for(discipline.name)
   	assert @project.suitable_for?(discipline.name),
   	    "project should now be suitable for #{discipline.name}"
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_cant_add_unknown_discipline_to_project
   	@project.suitable_for('cheesemakers')
   	assert @project.disciplines.count(:all) == 0,
   	  "There should be no cheesemakers"
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_cant_add_duplicate_discipline_to_project
   	@project.suitable_for(@icct.name)
   	assert @project.disciplines.count(:all) == 1,
@@ -129,19 +270,31 @@ class ProjectTest < ActiveSupport::TestCase
   	assert @project.disciplines.count(:all) == 2,
   	  "Should now be 2 suitable discipline for project"
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_suitable_for_all
   	@project.suitable_for_all
   	assert @project.suitable_for_all?, "Project is suitable for all"
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_discipline_suitable_for_none
   	@project.suitable_for_all
   	@project.suitable_for_none
   	assert ! @project.suitable_for_all?, "Project is suitable for all"
   	assert ! @project.suitable_for_any?, "Project is not suitable for any"
   end
+<<<<<<< HEAD:test/unit/project_test.rb
   
+=======
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:test/unit/project_test.rb
   def test_discipline_suitable_for_none?
   	@project.suitable_for_all
   	@project.suitable_for_none

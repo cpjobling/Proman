@@ -1,3 +1,4 @@
+<<<<<<< HEAD:.gitignore
 .svn
 .svn/**/*
 log/*.log
@@ -12,3 +13,18 @@ routes.txt
 
 
 
+=======
+.svn
+.svn/**/*
+log/*.log
+tmp/**/*
+db/*.sqlite3
+*.*~
+*~
+.project
+.loadpath
+nbproject
+routes.txt
+
+
+>>>>>>> 336471e6be257cf55c9afa2a65f928fde34e41fe:.gitignore
